@@ -9,9 +9,9 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
   annotations:
-    {{- range $key, $value := .Values.service.ingress.annotations }}
+{{- range $key, $value := .Values.service.ingress.annotations | indent 4}}
       {{ $key }}: {{ $value | quote }}
-    {{- end }}
+{{- end }}
 spec:
 {{- if .Values.service.ingress.tls }}
   tls:

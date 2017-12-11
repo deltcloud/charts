@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}-registry
+  labels:
+    app: {{ template "name" . }}-registry
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.registry.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}-registry
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: registry-app
+        image: {{ .Values.registry.image.repository }}:{{ .Values.registry.image.tag }}
+        imagePullPolicy: {{ .Values.registry.image.pullPolicy }}
+        ports:
+        - containerPort: 5000
+        - containerPort: 5001
+        volumeMounts:
+        - name: config
+          mountPath: /etc/docker/registry
+        - name: storage
+          mountPath: /storage
+        resources:
+{{ toYaml .Values.registry.resources | indent 10 }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ template "name" . }}-registry
+          items:
+          - key: config
+            path: config.yml
+          - key: cert
+            path: root.crt
+      - name: storage
+      {{- if .Values.registry.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ template "fullname" . }}-registry
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}

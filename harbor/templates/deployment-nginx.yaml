@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}-nginx
+  labels:
+    app: {{ template "name" . }}-nginx
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.nginx.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}-nginx
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: nginx-app
+        image: {{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}
+        imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        volumeMounts:
+        - name: config
+          mountPath: /etc/nginx
+        resources:
+{{ toYaml .Values.nginx.resources | indent 10 }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ template "name" . }}-nginx
+          items:
+          - key: config
+            path: nginx.conf
+          - key: pkey
+            path: https.key
+          - key: cert
+            path: https.crt

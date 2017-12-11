@@ -1,0 +1,239 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}-adminserver
+  labels:
+    app: {{ template "name" . }}-adminserver
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}-adminserver
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: adminserver-app
+        image: {{ .Values.adminserver.image.repository }}:{{ .Values.adminserver.image.tag }}
+        imagePullPolicy: {{ .Values.adminserver.image.pullPolicy }}
+        env:
+          - name: LOG_LEVEL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: LOG_LEVEL
+          - name: JSON_CFG_STORE_PATH
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: JSON_CFG_STORE_PATH
+          - name: EXT_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: EXT_ENDPOINT
+          - name: AUTH_MODE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: AUTH_MODE
+          - name: SELF_REGISTRATION
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: SELF_REGISTRATION
+          - name: LDAP_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: LDAP_URL
+          - name: LDAP_SEARCH_DN
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: LDAP_SEARCH_DN
+          - name: LDAP_SEARCH_PWD
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: LDAP_SEARCH_PWD
+          - name: LDAP_BASE_DN
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: LDAP_BASE_DN
+          - name: LDAP_FILTER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: LDAP_FILTER
+          - name: LDAP_UID
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: LDAP_UID
+          - name: LDAP_SCOPE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: LDAP_SCOPE
+          - name: LDAP_TIMEOUT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: LDAP_TIMEOUT
+          - name: DATABASE_TYPE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: DATABASE_TYPE
+          - name: MYSQL_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: MYSQL_HOST
+          - name: MYSQL_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: MYSQL_PORT
+          - name: MYSQL_USR
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: MYSQL_USR
+          - name: MYSQL_PWD
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: MYSQL_PWD
+          - name: MYSQL_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: MYSQL_DATABASE
+          - name: REGISTRY_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: REGISTRY_URL
+          - name: TOKEN_SERVICE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: TOKEN_SERVICE_URL
+          - name: EMAIL_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: EMAIL_HOST
+          - name: EMAIL_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: EMAIL_PORT
+          - name: EMAIL_USR
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: EMAIL_USR
+          - name: EMAIL_PWD
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: EMAIL_PWD
+          - name: EMAIL_SSL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: EMAIL_SSL
+          - name: EMAIL_FROM
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: EMAIL_FROM
+          - name: EMAIL_IDENTITY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: EMAIL_IDENTITY
+          - name: HARBOR_ADMIN_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: HARBOR_ADMIN_PASSWORD
+          - name: PROJECT_CREATION_RESTRICTION
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: PROJECT_CREATION_RESTRICTION
+          - name: VERIFY_REMOTE_CERT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: VERIFY_REMOTE_CERT
+          - name: MAX_JOB_WORKERS
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: MAX_JOB_WORKERS
+          - name: UI_SECRET
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: UI_SECRET
+          - name: JOBSERVICE_SECRET
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: JOBSERVICE_SECRET
+          - name: TOKEN_EXPIRATION
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: TOKEN_EXPIRATION
+          - name: CFG_EXPIRATION
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: CFG_EXPIRATION
+          - name: GODEBUG
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: GODEBUG
+          - name: ADMIRAL_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: ADMIRAL_URL
+          - name: WITH_NOTARY
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: WITH_NOTARY
+          - name: RESET
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "name" . }}-adminserver
+                key: RESET
+          #Workaround the volume API issue.
+          - name: IMAGE_STORE_PATH
+            value: "/"
+        resources:
+{{ toYaml .Values.adminserver.resources | indent 10 }}
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: config
+          mountPath: /etc/adminserver/
+      volumes:
+      - name: config
+        configMap:
+          name: {{ template "name" . }}-adminserver
+          items:
+          - key: SECRET_KEY
+            path: key

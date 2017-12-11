@@ -1,0 +1,26 @@
+{{- if and .Values.jobservice.persistence.enabled (not .Values.jobservice.persistence.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "fullname" . }}-log
+  labels:
+    app: {{ template "name" . }}-log
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.jobservice.persistence.storageClass }}
+spec:
+  accessModes:
+    - {{ .Values.jobservice.persistence.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.jobservice.persistence.size }}
+{{- if .Values.jobservice.persistence.storageClass }}
+{{- if (eq "-" .Values.jobservice.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.jobservice.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

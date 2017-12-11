@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "fullname" . }}-jobservice
+  labels:
+    app: {{ template "name" . }}-jobservice
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: {{ template "name" . }}-jobservice
+    release: {{ .Release.Name }}

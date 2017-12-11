@@ -1,0 +1,28 @@
+{{- if eq .Values.service.type "Ingress" }}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    {{- range $key, $value := .Values.service.ingress.annotations }}
+      {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  {{- if .Values.service.ingress.tls }}
+  tls:
+{{ toYaml .Values.service.ingress.tls | indent 4 }}
+  {{- end -}}
+  rules:
+    - host: {{ .Values.service.host }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ template "fullname" . }}-nginx
+              servicePort: 80
+{{- end -}}

@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "name" . }}-ui
+  labels:
+    app: {{ template "name" . }}-ui
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  CONFIG_PATH: /etc/ui/app.conf
+  LOG_LEVEL: {{ default "debug" .Values.log_level | quote }}
+  UI_SECRET: {{ default "rLaPvRovxxNKlG4n" .Values.ui_secret | quote }}
+  JOBSERVICE_SECRET: {{ default "Z3pyyY9u7JGf24SO" .Values.jobservice_secret | quote }}
+  GODEBUG: {{ default "netdns=cgo" .Values.godebug | quote }}
+  SECRET_KEY: {{ default "xudKRHSHX7xLOhVY" .Values.secret_key | quote }}
+  config: |
+    appname = {{ template "fullname" . }}-registry
+    runmode = dev
+    [lang]
+    types = en-US|zh-CN
+    names = en-US|zh-CN
+    [dev]
+    httpport = 80
+    [mail]
+    host = {{ default "smtp.mydomain.com" .Values.email_host | quote }}
+    port = {{ default "645" .Values.email_port | quote }}
+    username = {{ default "sample_admin@mydomain.com" .Values.email_usr | quote }}
+    password = {{ default "abc" .Values.email_pwd | quote }}
+    ssl = {{ default "true" .Values.email_ssl | quote }}
+    from = {{ default "admin <sample_admin@mydomain.com>" .Values.email_pwd | quote }}
+  pkey: |
+    -----BEGIN RSA PRIVATE KEY-----
+    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
+    -----END RSA PRIVATE KEY-----

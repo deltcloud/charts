@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "name" . }}-adminserver
+  labels:
+    app: {{ template "name" . }}-adminserver
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  LOG_LEVEL: {{ default "debug" .Values.log_level | quote }}
+  AUTH_MODE: db_auth
+  SELF_REGISTRATION: "on"
+  LDAP_URL: {{ default "ldaps://ldap.mydomain.com" .Values.ldap_url | quote }}
+  LDAP_SEARCH_DN: ""
+  LDAP_SEARCH_PWD: ""
+  LDAP_BASE_DN: {{ default "ou=people,dc=mydomain,dc=com" .Values.ldap_url | quote }}
+  LDAP_FILTER: ""
+  LDAP_UID: uid
+  LDAP_SCOPE: "3"
+  LDAP_TIMEOUT: "5"
+  DATABASE_TYPE: mysql
+  MYSQL_HOST: {{ template "fullname" . }}-mysql
+  MYSQL_PORT: "3306"
+  MYSQL_USR: root
+  MYSQL_PWD: {{ default "root123456" .Values.mysql.rootPassword | quote }}
+  MYSQL_DATABASE: registry
+  REGISTRY_URL: http://{{ template "fullname" . }}-registry:5000
+  TOKEN_SERVICE_URL: http://{{ template "fullname" . }}-ui/service/token
+  EMAIL_HOST: {{ default "smtp.mydomain.com" .Values.email_host | quote }}
+  EMAIL_PORT: {{ default "645" .Values.email_port | quote }}
+  EMAIL_USR: {{ default "sample_admin@mydomain.com" .Values.email_usr | quote }}
+  EMAIL_PWD: {{ default "abc" .Values.email_pwd | quote }}
+  EMAIL_SSL: {{ default "true" .Values.email_ssl | quote }}
+  EMAIL_FROM: {{ default "admin <sample_admin@mydomain.com>" .Values.email_pwd | quote }} 
+  EMAIL_IDENTITY: ""
+  HARBOR_ADMIN_PASSWORD: {{ default "Harbor12345" .Values.harbor_admin_password | quote }}
+  PROJECT_CREATION_RESTRICTION: everyone
+  VERIFY_REMOTE_CERT: "on"
+  MAX_JOB_WORKERS: "3"
+  UI_SECRET: {{ default "rLaPvRovxxNKlG4n" .Values.ui_secret | quote }} 
+  JOBSERVICE_SECRET: {{ default "Z3pyyY9u7JGf24SO" .Values.jobservice_secret | quote }}
+  TOKEN_EXPIRATION: "30"
+  CFG_EXPIRATION: "5"
+  GODEBUG: {{ default "netdns=cgo" .Values.godebug | quote }}
+  ADMIRAL_URL: NA
+  WITH_NOTARY: "False"
+  RESET: "false"
+  EXT_ENDPOINT: "{{ default "http" .Values.ui_url_protocol | quote }}//{{ default "reg.mydomain.com" .Values.service.host | quote}}"
+  TOKEN_URL: http://{{ template "fullname" . }}-ui
+  JSON_CFG_STORE_PATH: "/etc/config/config.json"
+  SECRET_KEY: {{ default "xudKRHSHX7xLOhVY" .Values.secret_key | quote }} 

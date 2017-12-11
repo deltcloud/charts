@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "name" . }}-jobservice
+  labels:
+    app: {{ template "name" . }}-jobservice
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  UI_SECRET: {{ default "rLaPvRovxxNKlG4n" .Values.ui_secret | quote }}
+  JOBSERVICE_SECRET: {{ default "Z3pyyY9u7JGf24SO" .Values.jobservice_secret | quote }}
+  SECRET_KEY: {{ default "xudKRHSHX7xLOhVY" .Values.secret_key | quote }}
+  MAX_JOB_WORKERS: {{ default "3" .Values.max_job_workers | quote }}
+  LOG_LEVEL: {{ default "debug" .Values.log_level | quote }}
+  GODEBUG: {{ default "netdns=cgo" .Values.godebug | quote }}
+  CONFIG_PATH: /etc/jobservice/app.conf
+  config: |
+    appname = {{ template "fullname" . }}-jobservice
+    runmode = dev
+    [dev]
+    httpport = 80

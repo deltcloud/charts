@@ -1,0 +1,63 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}-ui
+  labels:
+    app: {{ template "name" . }}-ui
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.ui.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "name" . }}-ui
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: ui-app
+        image: {{ .Values.ui.image.repository }}:{{ .Values.ui.image.tag}}
+        imagePullPolicy: {{ .Values.ui.image.pullPolicy }}
+        env:
+          - name: CONFIG_PATH
+            valueFrom: 
+              configMapKeyRef: 
+                name: {{ template "name" . }}-ui
+                key: CONFIG_PATH
+          - name: LOG_LEVEL
+            valueFrom: 
+              configMapKeyRef: 
+                name: {{ template "name" . }}-ui
+                key: LOG_LEVEL
+          - name: UI_SECRET
+            valueFrom: 
+              configMapKeyRef: 
+                name: {{ template "name" . }}-ui
+                key: UI_SECRET
+          - name: JOBSERVICE_SECRET
+            valueFrom: 
+              configMapKeyRef: 
+                name: {{ template "name" . }}-ui
+                key: JOBSERVICE_SECRET
+          - name: GODEBUG
+            valueFrom: 
+              configMapKeyRef: 
+                name: {{ template "name" . }}-ui
+                key: GODEBUG
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: config
+          mountPath: /etc/ui
+        resources:
+{{ toYaml .Values.ui.resources | indent 10 }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ template "name" . }}-ui
+          items:
+          - key: config
+            path: app.conf
+          - key: pkey
+            path: private_key.pem

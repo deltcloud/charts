@@ -17,7 +17,7 @@ spec:
 {{- if .Values.service.ingress.tls }}
   tls:
   - hosts:
-    - {{ .Values.service.host } 
+    - {{ .Values.service.host }}
     secretName: {{ template "fullname" . }}-tls
 {{- end }}
   rules:

@@ -13,9 +13,11 @@ metadata:
       {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
-  {{- if .Values.service.ingress.tls }}
+  {{- if .Values.service.ingress.tls.enabled }}
   tls:
-{{ toYaml .Values.service.ingress.tls | indent 4 }}
+    - hosts:
+      - {{ .Values.service.host }}
+      secretName: harbor-tls
   {{- end -}}
   rules:
     - host: {{ .Values.service.host }}

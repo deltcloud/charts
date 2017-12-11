@@ -2,11 +2,11 @@ apiVersion: v1
 entries:
   harbor:
   - apiVersion: v1
-    created: 2017-12-11T17:18:46.049701936+08:00
+    created: 2017-12-11T17:21:47.312515248+08:00
     description: A Helm chart for Kubernetes
-    digest: 6fe420e473e9917a78c29cff2224b17b93933bd9f265a242b772133ab9ef8335
+    digest: 3a28243d01cfa520e06bd81f13a91f63b89b5bc852e4d96351833db0f2aae03d
     name: harbor
     urls:
     - https://deltcloud.github.io/charts/harbor-0.1.0.tgz
     version: 0.1.0
-generated: 2017-12-11T17:18:46.048496836+08:00
+generated: 2017-12-11T17:21:47.311258681+08:00

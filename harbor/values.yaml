@@ -22,9 +22,9 @@ service:
       kubernetes.io/tls-acme: "true"
     tls:
       # Secrets must be manually created in the namespace.
-      - secretName: harbor-tls
-        hosts:
-          - reg.1.k8s.linkcloud.cn
+    - hosts
+        - reg.1.k8s.linkcloud.cn
+        secretName: harbor-tls
 
 nginx:
   replicaCount: 1

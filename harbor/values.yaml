@@ -9,7 +9,7 @@ jobservice_secret: "Z3pyyY9u7JGf24SO"
 #godebug: "netdns=cgo"
 
 service:
-  host: reg.1.k8s.linkcloud.cn
+  host: "reg.1.k8s.linkcloud.cn"
   # support Ingress,NodePort,LoadBalance.If type is Ingress, ingress is a necessary felid. If type is NodePort, externalPort is a necessary felid.
   # annotations.nginx.org/client-max-body-size default is 1m we should change it to match image size needs.
   type: Ingress
@@ -20,8 +20,7 @@ service:
       # nginx.org/client-max-body-size: "10000m"
       kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: "true"
-    tls:
-      enabled: true
+    tls: true
 
 nginx:
   replicaCount: 1

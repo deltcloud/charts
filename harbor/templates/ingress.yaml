@@ -13,7 +13,7 @@ metadata:
       {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
-  {{- if .Values.service.ingress.tls.enabled }}
+  {{- if .Values.service.ingress.tls }}
   tls:
     - hosts:
       - {{ .Values.service.host }}

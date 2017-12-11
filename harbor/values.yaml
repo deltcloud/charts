@@ -2,7 +2,7 @@
 
 ui_secret: "rLaPvRovxxNKlG4n"
 jobservice_secret: "Z3pyyY9u7JGf24SO"
-ui_url_protocol: http
+ui_url_protocol: "http"
 
 ## defaut log level debug
 #log_level: "debug"

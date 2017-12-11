@@ -13,12 +13,12 @@ metadata:
       {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
-  {{- if .Values.service.ingress.tls }}
+{{- if .Values.service.ingress.tls }}
   tls:
     - hosts:
       - {{ .Values.service.host }}
-      secretName: harbor-tls
-  {{- end -}}
+      secretName: {{ template "fullname" . }}-tls
+{{- end -}}
   rules:
     - host: {{ .Values.service.host }}
       http:

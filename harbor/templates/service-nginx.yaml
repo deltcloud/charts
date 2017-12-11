@@ -8,7 +8,11 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
+{{- if eq .Values.service.type "Ingress" }}
+  type: ClusterIP
+{{- else }}
   type: {{ .Values.service.type }}
+{{- end }}
   ports:
     - name: http
       port: 80

@@ -1,7 +1,7 @@
 ## harboar configuration
 
 ui_secret: "rLaPvRovxxNKlG4n"
-jobservice_secret "Z3pyyY9u7JGf24SO"
+jobservice_secret: "Z3pyyY9u7JGf24SO"
 
 ## defaut log level debug
 #log_level: "debug"

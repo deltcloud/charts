@@ -9,8 +9,9 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
   annotations:
-{{- range $key, $value := .Values.service.ingress.annotations | indent 4}}
-      {{ $key }}: {{ $value | quote }}
+{{ toYaml .Values.service.ingress.annotations | indent 4}}
+{{- if .Values.service.ingress.tls }}
+    kubernetes.io/tls-acme: "true"
 {{- end }}
 spec:
 {{- if .Values.service.ingress.tls }}

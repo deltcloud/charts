@@ -1,7 +1,10 @@
 ## harboar configuration
 
-ui_secret: "rLaPvRovxxNKlG4n"
-jobservice_secret: "Z3pyyY9u7JGf24SO"
+ui_secret: "R0pgaboUszpAkhQ0"
+jobservice_secret: "l5wzTaD2RyuwKIIw"
+secret_key: "lY7sfY5AwPZtcsTz"
+
+#max_job_workers "3"
 
 ## defaut log level debug
 #log_level: "debug"

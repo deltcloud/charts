@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ template "fullname" . }}-jobservice
   labels:
-    app: {{ template "name" . }}-jobservice
+    app: {{ template "fullname" . }}-jobservice
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -11,5 +11,5 @@ spec:
   ports:
     - port: 80
   selector:
-    app: {{ template "name" . }}-jobservice
+    app: {{ template "fullname" . }}-jobservice
     release: {{ .Release.Name }}

@@ -45,7 +45,7 @@ data:
   GODEBUG: {{ default "netdns=cgo" .Values.godebug | quote }}
   ADMIRAL_URL: NA
   WITH_NOTARY: "False"
-  RESET: "false"
+  RESET: "true"
   EXT_ENDPOINT: http://{{ default "reg.mydomain.com" .Values.service.host | quote }}
   TOKEN_URL: http://{{ template "fullname" . }}-ui
   JSON_CFG_STORE_PATH: "/etc/config/config.json"

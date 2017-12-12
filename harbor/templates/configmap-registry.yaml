@@ -27,6 +27,7 @@ data:
     http:
       addr: :5000
       secret: placeholder
+      relativeurls: true
       debug:
         addr: localhost:5001
     auth:

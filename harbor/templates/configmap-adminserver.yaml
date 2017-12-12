@@ -38,8 +38,8 @@ data:
   PROJECT_CREATION_RESTRICTION: everyone
   VERIFY_REMOTE_CERT: "on"
   MAX_JOB_WORKERS: "3"
-  UI_SECRET: {{ default "rLaPvRovxxNKlG4n" .Values.ui_secret | quote }} 
-  JOBSERVICE_SECRET: {{ default "Z3pyyY9u7JGf24SO" .Values.jobservice_secret | quote }}
+  UI_SECRET: {{ default "R0pgaboUszpAkhQ0" .Values.ui_secret | quote }} 
+  JOBSERVICE_SECRET: {{ default "l5wzTaD2RyuwKIIw" .Values.jobservice_secret | quote }}
   TOKEN_EXPIRATION: "30"
   CFG_EXPIRATION: "5"
   GODEBUG: {{ default "netdns=cgo" .Values.godebug | quote }}
@@ -49,4 +49,4 @@ data:
   EXT_ENDPOINT: http://{{ default "reg.mydomain.com" .Values.service.host | quote }}
   TOKEN_URL: http://{{ template "fullname" . }}-ui
   JSON_CFG_STORE_PATH: "/etc/config/config.json"
-  SECRET_KEY: {{ default "xudKRHSHX7xLOhVY" .Values.secret_key | quote }} 
+  SECRET_KEY: {{ default "lY7sfY5AwPZtcsTz" .Values.secret_key | quote }} 

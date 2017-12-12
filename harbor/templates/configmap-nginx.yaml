@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "name" . }}-nginx
+  name: {{ template "fullname" . }}-nginx
   labels:
-    app: {{ template "name" . }}-nginx
+    app: {{ template "fullname" . }}-nginx
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -34,7 +34,7 @@ data:
             chunked_transfer_encoding on;
             # rewrite ^/(.*) https://$server_name:443/$1 permanent;
             location / {
-                proxy_pass http://ui/;
+                proxy_pass http://{{ template "fullname" . }}-ui/;
                 proxy_set_header Host $http_host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -48,7 +48,7 @@ data:
                 return 404;
             }
             location /v2/ {
-                proxy_pass http://registry/v2/;
+                proxy_pass http://{{ template "fullname" . }}-registry/v2/;
                 proxy_set_header Host $http_host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -58,7 +58,7 @@ data:
                 proxy_request_buffering off;
             }
             location /service/ {
-                proxy_pass http://ui/service/;
+                proxy_pass http://{{ template "fullname" . }}-ui/service/;
                 proxy_set_header Host $http_host;
                 proxy_set_header X-Real-IP $remote_addr;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

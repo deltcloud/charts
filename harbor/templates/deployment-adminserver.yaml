@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "fullname" . }}-adminserver
   labels:
-    app: {{ template "name" . }}-adminserver
+    app: {{ template "fullname" . }}-adminserver
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}-adminserver
+        app: {{ template "fullname" . }}-adminserver
         release: {{ .Release.Name }}
     spec:
       containers:
@@ -23,202 +23,202 @@ spec:
           - name: LOG_LEVEL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: LOG_LEVEL
           - name: JSON_CFG_STORE_PATH
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: JSON_CFG_STORE_PATH
           - name: EXT_ENDPOINT
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: EXT_ENDPOINT
           - name: AUTH_MODE
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: AUTH_MODE
           - name: SELF_REGISTRATION
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: SELF_REGISTRATION
           - name: LDAP_URL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: LDAP_URL
           - name: LDAP_SEARCH_DN
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: LDAP_SEARCH_DN
           - name: LDAP_SEARCH_PWD
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: LDAP_SEARCH_PWD
           - name: LDAP_BASE_DN
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: LDAP_BASE_DN
           - name: LDAP_FILTER
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: LDAP_FILTER
           - name: LDAP_UID
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: LDAP_UID
           - name: LDAP_SCOPE
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: LDAP_SCOPE
           - name: LDAP_TIMEOUT
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: LDAP_TIMEOUT
           - name: DATABASE_TYPE
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: DATABASE_TYPE
           - name: MYSQL_HOST
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: MYSQL_HOST
           - name: MYSQL_PORT
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: MYSQL_PORT
           - name: MYSQL_USR
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: MYSQL_USR
           - name: MYSQL_PWD
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: MYSQL_PWD
           - name: MYSQL_DATABASE
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: MYSQL_DATABASE
           - name: REGISTRY_URL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: REGISTRY_URL
           - name: TOKEN_SERVICE_URL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: TOKEN_SERVICE_URL
           - name: EMAIL_HOST
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: EMAIL_HOST
           - name: EMAIL_PORT
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: EMAIL_PORT
           - name: EMAIL_USR
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: EMAIL_USR
           - name: EMAIL_PWD
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: EMAIL_PWD
           - name: EMAIL_SSL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: EMAIL_SSL
           - name: EMAIL_FROM
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: EMAIL_FROM
           - name: EMAIL_IDENTITY
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: EMAIL_IDENTITY
           - name: HARBOR_ADMIN_PASSWORD
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: HARBOR_ADMIN_PASSWORD
           - name: PROJECT_CREATION_RESTRICTION
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: PROJECT_CREATION_RESTRICTION
           - name: VERIFY_REMOTE_CERT
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: VERIFY_REMOTE_CERT
           - name: MAX_JOB_WORKERS
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: MAX_JOB_WORKERS
           - name: UI_SECRET
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: UI_SECRET
           - name: JOBSERVICE_SECRET
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: JOBSERVICE_SECRET
           - name: TOKEN_EXPIRATION
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: TOKEN_EXPIRATION
           - name: CFG_EXPIRATION
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: CFG_EXPIRATION
           - name: GODEBUG
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: GODEBUG
           - name: ADMIRAL_URL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: ADMIRAL_URL
           - name: WITH_NOTARY
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: WITH_NOTARY
           - name: RESET
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-adminserver
+                name: {{ template "fullname" . }}-adminserver
                 key: RESET
           #Workaround the volume API issue.
           - name: IMAGE_STORE_PATH
@@ -233,7 +233,7 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: {{ template "name" . }}-adminserver
+          name: {{ template "fullname" . }}-adminserver
           items:
           - key: SECRET_KEY
             path: key

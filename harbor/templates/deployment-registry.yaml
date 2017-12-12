@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "fullname" . }}-registry
   labels:
-    app: {{ template "name" . }}-registry
+    app: {{ template "fullname" . }}-registry
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
 spec:
@@ -11,7 +11,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}-registry
+        app: {{ template "fullname" . }}-registry
         release: {{ .Release.Name }}
     spec:
       containers:
@@ -31,7 +31,7 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: {{ template "name" . }}-registry
+          name: {{ template "fullname" . }}-registry
           items:
           - key: config
             path: config.yml

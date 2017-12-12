@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ template "fullname" . }}-nginx
   labels:
-    app: {{ template "name" . }}-nginx
+    app: {{ template "fullname" . }}-nginx
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -17,5 +17,5 @@ spec:
     - name: http
       port: 80
   selector:
-    app: {{ template "name" . }}-nginx
+    app: {{ template "fullname" . }}-nginx
     release: {{ .Release.Name }}

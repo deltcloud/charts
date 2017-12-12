@@ -33,7 +33,7 @@ data:
       token:
         issuer: registry-token-issuer
         realm: http://{{ .Values.service.host }}/service/token
-        rootcertbundle: /etc/docker/registry/root.crt
+        rootcertbundle: /etc/registry/root.crt
         service: harbor-registry
     notifications:
       endpoints:

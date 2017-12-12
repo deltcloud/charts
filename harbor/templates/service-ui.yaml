@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ template "fullname" . }}-ui
   labels:
-    app: {{ template "name" . }}-ui
+    app: {{ template "fullname" . }}-ui
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -11,5 +11,5 @@ spec:
   ports:
     - port: 80
   selector:
-    app: {{ template "name" . }}-ui
+    app: {{ template "fullname" . }}-ui
     release: {{ .Release.Name }}

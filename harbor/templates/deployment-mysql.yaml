@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "fullname" . }}-mysql
   labels:
-    app: {{ template "name" . }}-mysql
+    app: {{ template "fullname" . }}-mysql
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}-mysql
+        app: {{ template "fullname" . }}-mysql
         release: {{ .Release.Name }}
     spec:
       containers:
@@ -27,7 +27,7 @@ spec:
           - name: MYSQL_ROOT_PASSWORD
             valueFrom: 
               configMapKeyRef: 
-               name: {{ template "name" . }}-mysql
+               name: {{ template "fullname" . }}-mysql
                key: MYSQL_ROOT_PASSWORD
         volumeMounts:
         - name: mysql-storage

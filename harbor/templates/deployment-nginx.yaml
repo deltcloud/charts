@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "fullname" . }}-nginx
   labels:
-    app: {{ template "name" . }}-nginx
+    app: {{ template "fullname" . }}-nginx
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}-nginx
+        app: {{ template "fullname" . }}-nginx
         release: {{ .Release.Name }}
     spec:
       containers:
@@ -30,7 +30,7 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: {{ template "name" . }}-nginx
+          name: {{ template "fullname" . }}-nginx
           items:
           - key: config
             path: nginx.conf

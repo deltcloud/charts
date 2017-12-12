@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ template "fullname" . }}-mysql
   labels:
-    app: {{ template "name" . }}-mysql
+    app: {{ template "fullname" . }}-mysql
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -11,5 +11,5 @@ spec:
   ports:
     - port: 3306
   selector:
-    app: {{ template "name" . }}-mysql
+    app: {{ template "fullname" . }}-mysql
     release: {{ .Release.Name }}

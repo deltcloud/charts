@@ -15,7 +15,7 @@ data:
   LOG_LEVEL: {{ default "debug" .Values.log_level | quote }}
   GODEBUG: {{ default "netdns=cgo" .Values.godebug | quote }}
   CONFIG_PATH: /etc/jobservice/app.conf
-  ADMINSERVER_URL: {{ template "fullname" . }}-adminserver
+  ADMINSERVER_URL: http://{{ template "fullname" . }}-adminserver
   config: |
     appname = {{ template "fullname" . }}-jobservice
     runmode = dev

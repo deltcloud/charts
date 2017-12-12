@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "fullname" . }}-jobservice
   labels:
-    app: {{ template "fillname" . }}-jobservice
+    app: {{ template "fullname" . }}-jobservice
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}

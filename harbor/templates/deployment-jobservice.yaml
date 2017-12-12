@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "fullname" . }}-jobservice
   labels:
-    app: {{ template "name" . }}-jobservice
+    app: {{ template "fullname" . }}-jobservice
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}-jobservice
+        app: {{ template "fullname" . }}-jobservice
         release: {{ .Release.Name }}
     spec:
       containers:
@@ -25,32 +25,32 @@ spec:
           - name: UI_SECRET
             valueFrom: 
               configMapKeyRef: 
-                name: {{ template "name" . }}-jobservice
+                name: {{ template "fullname" . }}-jobservice
                 key: UI_SECRET
           - name: JOBSERVICE_SECRET
             valueFrom: 
               configMapKeyRef: 
-                name: {{ template "name" . }}-jobservice
+                name: {{ template "fullname" . }}-jobservice
                 key: JOBSERVICE_SECRET
           - name: CONFIG_PATH
             valueFrom: 
               configMapKeyRef: 
-                name: {{ template "name" . }}-jobservice
+                name: {{ template "fullname" . }}-jobservice
                 key: CONFIG_PATH
           - name: LOG_LEVEL
             valueFrom: 
               configMapKeyRef: 
-                name: {{ template "name" . }}-jobservice
+                name: {{ template "fullname" . }}-jobservice
                 key: LOG_LEVEL
           - name: GODEBUG
             valueFrom: 
               configMapKeyRef: 
-                name: {{ template "name" . }}-jobservice
+                name: {{ template "fullname" . }}-jobservice
                 key: GODEBUG
           - name: ADMINSERVER_URL
             valueFrom:
               configMapKeyRef:
-                name: {{ template "name" . }}-jobservice
+                name: {{ template "fullname" . }}-jobservice
                 key: ADMINSERVER_URL
         ports:
         - containerPort: 80
@@ -62,7 +62,7 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: {{ template "name" . }}-jobservice
+          name: {{ template "fullname" . }}-jobservice
           items:
           - key: config
             path: app.conf

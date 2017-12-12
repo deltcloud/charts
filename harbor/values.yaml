@@ -44,7 +44,7 @@ ui:
   replicaCount: 1
   image:
     repository: registry.cn-hangzhou.aliyuncs.com/linkcloud/harbor-ui
-    tag: 0.5.0
+    tag: v1.2.2
     pullPolicy: IfNotPresent
   resources: {}
     # limits:
@@ -83,7 +83,7 @@ jobservice:
   replicaCount: 1
   image:
     repository: registry.cn-hangzhou.aliyuncs.com/linkcloud/harbor-jobservice
-    tag: 0.5.0
+    tag: v1.2.2
     pullPolicy: IfNotPresent
   resources: {}
     # limits:
@@ -101,7 +101,7 @@ jobservice:
 mysql:
   image:
     repository: registry.cn-hangzhou.aliyuncs.com/linkcloud/harbor-db
-    tag: 0.5.0
+    tag: v1.2.2
     pullPolicy: IfNotPresent
   resources: {}
     # limits:
@@ -121,7 +121,7 @@ mysql:
 adminserver:
   image:
     repository: registry.cn-hangzhou.aliyuncs.com/linkcloud/harbor-adminserver
-    tag: v1.2.0
+    tag: v1.2.2
     pullPolicy: IfNotPresent
   resources: {}
     # limits:

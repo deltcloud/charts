@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "name" . }}-ui
+  name: {{ template "fullname" . }}-ui
   labels:
-    app: {{ template "name" . }}-ui
+    app: {{ template "fullname" . }}-ui
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}

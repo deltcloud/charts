@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "fullname" . }}-ui
   labels:
-    app: {{ template "name" . }}-ui
+    app: {{ template "fullname" . }}-ui
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}-ui
+        app: {{ template "fullname" . }}-ui
         release: {{ .Release.Name }}
     spec:
       containers:
@@ -23,32 +23,32 @@ spec:
           - name: CONFIG_PATH
             valueFrom: 
               configMapKeyRef: 
-                name: {{ template "name" . }}-ui
+                name: {{ template "fullname" . }}-ui
                 key: CONFIG_PATH
           - name: LOG_LEVEL
             valueFrom: 
               configMapKeyRef: 
-                name: {{ template "name" . }}-ui
+                name: {{ template "fullname" . }}-ui
                 key: LOG_LEVEL
           - name: UI_SECRET
             valueFrom: 
               configMapKeyRef: 
-                name: {{ template "name" . }}-ui
+                name: {{ template "fullname" . }}-ui
                 key: UI_SECRET
           - name: JOBSERVICE_SECRET
             valueFrom: 
               configMapKeyRef: 
-                name: {{ template "name" . }}-ui
+                name: {{ template "fullname" . }}-ui
                 key: JOBSERVICE_SECRET
           - name: GODEBUG
             valueFrom: 
               configMapKeyRef: 
-                name: {{ template "name" . }}-ui
+                name: {{ template "fullname" . }}-ui
                 key: GODEBUG
           - name: ADMINSERVER_URL
             valueFrom: 
               configMapKeyRef: 
-                name: {{ template "name" . }}-ui
+                name: {{ template "fullname" . }}-ui
                 key: ADMINSERVER_URL
         ports:
         - containerPort: 80
@@ -60,7 +60,7 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: {{ template "name" . }}-ui
+          name: {{ template "fullname" . }}-ui
           items:
           - key: config
             path: app.conf

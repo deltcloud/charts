@@ -43,7 +43,7 @@ data:
   TOKEN_EXPIRATION: "30"
   CFG_EXPIRATION: "5"
   GODEBUG: {{ default "netdns=cgo" .Values.godebug | quote }}
-  ADMIRAL_URL: http://{{ template "fullname" . }}-adminserver
+  ADMIRAL_URL: NA
   WITH_NOTARY: "False"
   RESET: "true"
   EXT_ENDPOINT: http://{{ default "reg.mydomain.com" .Values.service.host | quote }}

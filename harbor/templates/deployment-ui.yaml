@@ -45,11 +45,11 @@ spec:
               configMapKeyRef: 
                 name: {{ template "fullname" . }}-ui
                 key: GODEBUG
-          - name: ADMINSERVER_URL
+          - name: ADMIN_SERVER_URL
             valueFrom: 
               configMapKeyRef: 
                 name: {{ template "fullname" . }}-ui
-                key: ADMINSERVER_URL
+                key: ADMIN_SERVER_URL
         ports:
         - containerPort: 80
         volumeMounts:

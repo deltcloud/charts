@@ -14,7 +14,7 @@ data:
   JOBSERVICE_SECRET: {{ default "l5wzTaD2RyuwKIIw" .Values.jobservice_secret | quote }}
   GODEBUG: {{ default "netdns=cgo" .Values.godebug | quote }}
   SECRET_KEY: {{ default "lY7sfY5AwPZtcsTz" .Values.secret_key | quote }}
-  ADMINSERVER_URL: http://{{ template "fullname" . }}-adminserver
+  ADMIN_SERVER_URL: http://{{ template "fullname" . }}-adminserver
   config: |
     appname = {{ template "fullname" . }}-registry
     runmode = dev

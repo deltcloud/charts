@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "name" . }}-adminserver
+  name: {{ template "fullname" . }}-adminserver
   labels:
-    app: {{ template "name" . }}-adminserver
+    app: {{ template "fullname" . }}-adminserver
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}

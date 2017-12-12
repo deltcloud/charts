@@ -31,7 +31,7 @@ data:
         addr: localhost:5001
     auth:
       token:
-        issuer: registry-token-issuer
+        issuer: harbor-token-issuer
         realm: http://{{ .Values.service.host }}/service/token
         rootcertbundle: /etc/registry/root.crt
         service: harbor-registry

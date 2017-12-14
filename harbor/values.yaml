@@ -76,7 +76,7 @@ registry:
     #  memory: 128Mi
   persistence:
     enabled: true
-    storageClass: bobby
+    storageClass: ceph-rbd
     accessMode: ReadWriteOnce
     size: 8Gi
 
@@ -95,7 +95,7 @@ jobservice:
     #  memory: 128Mi
   persistence:
     enabled: true
-    storageClass: bobby
+    storageClass: ceph-rbd
     accessMode: ReadWriteOnce
     size: 8Gi
 
@@ -115,7 +115,7 @@ mysql:
   # rootPassword: "root123456"
   persistence:
     enabled: true
-    storageClass: bobby
+    storageClass: ceph-rbd
     accessMode: ReadWriteOnce
     size: 8Gi
 

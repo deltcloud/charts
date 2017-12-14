@@ -30,4 +30,4 @@ data:
     password = {{ default "abc" .Values.email_pwd | quote }}
     ssl = {{ default "true" .Values.email_ssl | quote }}
     from = {{ default "admin <sample_admin@mydomain.com>" .Values.email_pwd | quote }}
-  pkey: {{ .Values.pkey }}
+  pkey: {{ .Values.pkey | quote }}

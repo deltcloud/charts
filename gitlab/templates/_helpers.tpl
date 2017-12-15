@@ -22,6 +22,8 @@ Template for outputing the gitlabUrl
 {{- if .Values.gitlabUrl -}}
 {{- .Values.gitlabUrl | quote -}}
 {{- else -}}
-{{- printf "http://%s.%s:8005/" $fullname .Release.Namespace | quote -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- $fullname := printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- printf "http://%s.%s:8005/" $fullname  .Release.Namespace | quote -}}
 {{- end -}}
 {{- end -}}

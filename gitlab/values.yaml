@@ -102,14 +102,14 @@ postgresql:
   env:
     DB_EXTENSION: pg_trgm
   persistence:
-  storageClass: default
+    storageClass: default
     size: 8Gi
 
 redis:
   image: "registry.cn-hangzhou.aliyuncs.com/linkcloud/bitnami_redis:4.0.6-r0"
   redisPassword: "redisPassword"
-  storageClass: default
   persistence:
+    storageClass: default
     size: 8Gi
   
 

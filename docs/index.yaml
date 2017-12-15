@@ -2,9 +2,9 @@ apiVersion: v1
 entries:
   gitlab:
   - apiVersion: v1
-    created: 2017-12-15T14:02:48.83811803+08:00
+    created: 2017-12-15T14:15:43.434636723+08:00
     description: GitLab Omnibus all-in-one bundle
-    digest: 55c6a8b5a30ef37fb55babede159161e8e6bde0cf89c6c09b9283401a34ac8fd
+    digest: 35b3cb49f67941a90b98aa8a063d2abadb3ca67550e880cb122e1a5ef0c7b439
     home: https://about.gitlab.com
     icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
     keywords:
@@ -32,7 +32,7 @@ entries:
     version: 0.1.36
   gitlab-omnibus:
   - apiVersion: v1
-    created: 2017-12-15T14:02:48.839127215+08:00
+    created: 2017-12-15T14:15:43.43556487+08:00
     description: GitLab Omnibus all-in-one bundle
     digest: 1e760e6f83e6aa6662c180aa4fff74685293d4dedf5ab344a9dbc4879da4351c
     home: https://about.gitlab.com
@@ -62,11 +62,11 @@ entries:
     version: 0.1.36
   harbor:
   - apiVersion: v1
-    created: 2017-12-15T14:02:48.839758818+08:00
+    created: 2017-12-15T14:15:43.436148635+08:00
     description: A Helm chart for Kubernetes
     digest: b646f6277687e5e5904293189a6e8b448bc118ae8e71ae0b49f3ec92acf242c4
     name: harbor
     urls:
     - https://deltcloud.github.io/charts/harbor-0.1.0.tgz
     version: 0.1.0
-generated: 2017-12-15T14:02:48.835342514+08:00
+generated: 2017-12-15T14:15:43.431561695+08:00

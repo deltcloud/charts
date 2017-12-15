@@ -23,7 +23,7 @@ spec:
 {{- end }}
 {{- end }}
 
-
+---
 {{- if and .Values.persistence.config.enabled (not .Values.persistence.config.existingClaim) }}
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -49,6 +49,7 @@ spec:
 {{- end }}
 {{- end }}
 
+---
 {{- if and .Values.persistence.registry.enabled (not .Values.persistence.registry.existingClaim) }}
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -73,3 +74,5 @@ spec:
 {{- end }}
 {{- end }}
 {{- end }}
+
+---

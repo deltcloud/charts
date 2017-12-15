@@ -15,8 +15,8 @@ data:
   mattermost_external_scheme: https
   mattermost_external_hostname: mattermost.{{ .Values.baseDomain }}
   mattermost_app_uid: {{ .Values.mattermostAppUID }}
-  postgres_user: gitlab
-  postgres_db: gitlab_production
+  postgres_user: {{ .Values.postgresql.postgresUser }}
+  postgres_db: {{ .Values.postgresql.postgresDatabase }}
   pages_external_scheme: {{ .Values.pagesExternalScheme }}
   pages_external_domain: {{ .Values.pagesExternalDomain }}
 ---
@@ -30,7 +30,8 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
-  postgres_password: {{ .Values.postgresPassword }}
+  postgres_password: {{ .Values.postgresql.postgresPassword }}
+  redis_password: {{ .Values.redis.redisPassword }}
   initial_shared_runners_registration_token: {{ default "" .Values.initialSharedRunnersRegistrationToken | b64enc | quote }}
   mattermost_app_secret: {{ .Values.mattermostAppSecret | b64enc | quote }}
 {{- if .Values.gitlabEELicense }}

@@ -1,0 +1,75 @@
+{{- if and .Values.persistence.storage.enabled (not .Values.persistence.storage.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "fullname" . }}-storage
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  accessModes:
+    - {{ default "ReadWriteOnce" .Values.persistence.storage.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.storage.size |quote }}
+{{- if .Values.persistence.storage.storageClass }}
+{{- if (eq "-" .Values.persistence.storage.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistence.storage.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}
+
+
+{{- if and .Values.persistence.config.enabled (not .Values.persistence.config.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "fullname" . }}-config
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  accessModes:
+    - {{ default "ReadWriteOnce" .Values.persistence.config.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.config.size |quote }}
+{{- if .Values.persistence.config.storageClass }}
+{{- if (eq "-" .Values.persistence.config.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistence.config.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{- if and .Values.persistence.registry.enabled (not .Values.persistence.registry.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "fullname" . }}-registry-storage
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  accessModes:
+    - {{ default "ReadWriteOnce" .Values.persistence.registry.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.registry.size |quote }}
+{{- if .Values.persistence.registry.storageClass }}
+{{- if (eq "-" .Values.persistence.registry.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistence.registry.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

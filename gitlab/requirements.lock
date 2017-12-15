@@ -1,0 +1,12 @@
+dependencies:
+- name: gitlab-runner
+  repository: https://charts.gitlab.io/
+  version: 0.1.13
+- name: redis
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 1.1.2
+- name: postgresql
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 0.8.5
+digest: sha256:25a26456f0acfe6859e023cd6671a005848c6ac8a0e0890a54e3e34deea555e3
+generated: 2017-12-15T13:41:58.158563943+08:00

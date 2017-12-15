@@ -22,25 +22,11 @@ nameOverride: gitlab
 gitlab: ce
 gitlabCEImage: gitlab/gitlab-ce:10.1.0-ce.0
 gitlabEEImage: gitlab/gitlab-ee:10.1.0-ee.0
-postgresPassword: NDl1ZjNtenMxcWR6NXZnbw==
 initialSharedRunnersRegistrationToken: "tQtCbx5UZy_ByS7FyzUH"
 mattermostAppSecret: NDl1ZjNtenMxcWR6NXZnbw==
 mattermostAppUID: aadas
-redisImage: redis:3.2.10
-redisDedicatedStorage: true
-#redisStorageSize: 5Gi
-redisAccessMode: ReadWriteOnce
-postgresImage: postgres:9.6.5
-# If you disable postgresDedicatedStorage, you should consider bumping up gitlabRailsStorageSize
-postgresDedicatedStorage: true
-postgresAccessMode: ReadWriteOnce
-#postgresStorageSize: 30Gi
-gitlabDataAccessMode: ReadWriteOnce
-#gitlabDataStorageSize: 30Gi
 gitlabRegistryAccessMode: ReadWriteOnce
 #gitlabRegistryStorageSize: 30Gi
-gitlabConfigAccessMode: ReadWriteOnce
-#gitlabConfigStorageSize: 1Gi
 gitlabRunnerImage: gitlab/gitlab-runner:alpine-v10.1.0
 # Valid values for provider are `gke` for Google Container Engine. Leaving it blank (or any othervalue) will disable fast disk options.
 provider: gke
@@ -55,11 +41,7 @@ provider: gke
 ## If defined, volume.beta.kubernetes.io/storage-class: <storageClass>
 ## If not defined, but provider is gke, will use SSDs
 ## Otherwise default: volume.alpha.kubernetes.io/storage-class: default
-#gitlabConfigStorageClass: default
-#gitlabDataStorageClass: default
 #gitlabRegistryStorageClass: default
-#postgresStorageClass: default
-#redisStorageClass: default
 
 healthCheckToken: 'SXBAQichEJasbtDSygrD'
 # Optional, for GitLab EE images only
@@ -101,3 +83,44 @@ gitlab-runner:
     #   memoryLimit: 256Mi
     #   cpuRequests: 100m
     #   memoryRequests: 128Mi
+
+persistence:
+  storage:
+    enabled: true
+    accessMode: ReadWriteOnce
+    storageClass: default
+    size: 8Gi
+  config:
+    enabled: true
+    accessMode: ReadWriteOnce
+    storageClass: default
+    size: 1Gi
+  registry:
+    enabled: true
+    accessMode: ReadWriteOnce
+    storageClass: default
+    size: 8Gi
+
+postgresql:
+  image: "registry.cn-hangzhou.aliyuncs.com/linkcloud/postgres"
+  imageTag: "9.6.2"
+  imagePullPolicy: "IfNotPresent"
+  postgresUser: gitlab
+  postgresPassword: "postgresPassword"
+  postgresDatabase: "mattermost_production"
+  env:
+    DB_EXTENSION: pg_trgm
+  persistence:
+  storageClass: default
+    size: 8Gi
+
+redis:
+  image: "registry.cn-hangzhou.aliyuncs.com/linkcloud/bitnami_redis:4.0.6-r0"
+  redisPassword: "redisPassword"
+  storageClass: default
+  persistence:
+    size: 8Gi
+  
+
+
+

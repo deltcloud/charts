@@ -66,6 +66,11 @@ spec:
             secretKeyRef:
               name: {{ template "fullname" . }}-secrets
               key: postgres_password
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "fullname" . }}-secrets
+              key: redis_password
         - name: POSTGRES_DB
           valueFrom:
             configMapKeyRef:
@@ -133,6 +138,7 @@ spec:
 
             redis['enable'] = false
             gitlab_rails['redis_host'] = '{{ template "redis.fullname" . }}'
+            gitlab_rails['redis_password'] = ENV['REDIS_PASSWORD']
 
             mattermost['file_directory'] = '/gitlab-data/mattermost';
             mattermost['sql_driver_name'] = 'postgres';

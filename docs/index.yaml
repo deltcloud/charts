@@ -1,8 +1,38 @@
 apiVersion: v1
 entries:
+  gitlab:
+  - apiVersion: v1
+    created: 2017-12-15T13:43:48.058235505+08:00
+    description: GitLab Omnibus all-in-one bundle
+    digest: 48632e8f4b5f00f7fbb05851ae5644d98c0628f4d57e78df5e024e2c64678dc6
+    home: https://about.gitlab.com
+    icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
+    keywords:
+    - git
+    - ci
+    - cd
+    - deploy
+    - issue tracker
+    - code review
+    - wiki
+    maintainers:
+    - email: support@gitlab.com
+      name: GitLab Inc.
+    - name: Mark Pundsack
+    - name: Jason Plum
+    - name: DJ Mountney
+    - name: Joshua Lambert
+    name: gitlab
+    sources:
+    - http://docs.gitlab.com/ce/install/kubernetes/
+    - https://gitlab.com/charts/charts.gitlab.io
+    tillerVersion: '>=2.5.0'
+    urls:
+    - https://deltcloud.github.io/charts/gitlab-0.1.36.tgz
+    version: 0.1.36
   gitlab-omnibus:
   - apiVersion: v1
-    created: 2017-12-14T22:07:11.521528786+08:00
+    created: 2017-12-15T13:43:48.059785267+08:00
     description: GitLab Omnibus all-in-one bundle
     digest: 1e760e6f83e6aa6662c180aa4fff74685293d4dedf5ab344a9dbc4879da4351c
     home: https://about.gitlab.com
@@ -32,11 +62,11 @@ entries:
     version: 0.1.36
   harbor:
   - apiVersion: v1
-    created: 2017-12-14T22:07:11.522293452+08:00
+    created: 2017-12-15T13:43:48.060624796+08:00
     description: A Helm chart for Kubernetes
     digest: b646f6277687e5e5904293189a6e8b448bc118ae8e71ae0b49f3ec92acf242c4
     name: harbor
     urls:
     - https://deltcloud.github.io/charts/harbor-0.1.0.tgz
     version: 0.1.0
-generated: 2017-12-14T22:07:11.519677828+08:00
+generated: 2017-12-15T13:43:48.056148469+08:00

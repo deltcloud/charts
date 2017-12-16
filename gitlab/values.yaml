@@ -97,7 +97,7 @@ postgresql:
   imageTag: "9.6.2"
   imagePullPolicy: "IfNotPresent"
   postgresUser: gitlab
-  postgresPassword: "NDl1ZjNtenMxcWR6NXZnbw=="
+  postgresPassword: "postgrespassword123"
   postgresDatabase: "mattermost_production"
   env:
     DB_EXTENSION: pg_trgm
@@ -107,7 +107,7 @@ postgresql:
 
 redis:
   image: "registry.cn-hangzhou.aliyuncs.com/linkcloud/bitnami_redis:4.0.6-r0"
-  redisPassword: "NDl1ZjNtenMxcWR6NXZnbw=="
+  redisPassword: "redispassword123"
   persistence:
     storageClass: default
     size: 8Gi

@@ -30,8 +30,8 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
-  postgres_password: {{ .Values.postgresql.postgresPassword }}
-  redis_password: {{ .Values.redis.redisPassword }}
+  postgres_password: {{ .Values.postgresql.postgresPassword | b64enc | quote }}
+  redis_password: {{ .Values.redis.redisPassword | b64enc | quote }}
   initial_shared_runners_registration_token: {{ default "" .Values.initialSharedRunnersRegistrationToken | b64enc | quote }}
   mattermost_app_secret: {{ .Values.mattermostAppSecret | b64enc | quote }}
 {{- if .Values.gitlabEELicense }}

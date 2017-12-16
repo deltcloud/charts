@@ -218,6 +218,8 @@ spec:
         - name: pages
           containerPort: 8090
         {{- end }}
+        securityContext:
+          privileged: true
         volumeMounts:
         - name: config
           mountPath: /etc/gitlab

@@ -107,7 +107,8 @@ spec:
         emptyDir: {}
       {{- end }}
       - name: initdb
-        name: {{ template "postgresql.fullname" . }}-initdb
+        configMap:
+          name: {{ template "postgresql.fullname" . }}-initdb
       {{- if and .Values.metrics.enabled .Values.metrics.customMetrics }}
       - name: custom-metrics
         secret:

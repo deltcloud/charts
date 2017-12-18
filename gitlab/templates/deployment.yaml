@@ -131,13 +131,13 @@ spec:
             registry['registry_http_addr'] = '0.0.0.0:8105'
 
             postgresql['enable'] = false
-            gitlab_rails['db_host'] = {{ template "gitlab.postgresql.fullname" . }}
+            gitlab_rails['db_host'] = '{{ template "gitlab.postgresql.fullname" . }}'
             gitlab_rails['db_password'] = ENV['POSTGRES_PASSWORD']
             gitlab_rails['db_username'] = ENV['POSTGRES_USER']
             gitlab_rails['db_database'] = ENV['POSTGRES_DB']
 
             redis['enable'] = false
-            gitlab_rails['redis_host'] = {{ template "gitlab.redis.fullname" . }}
+            gitlab_rails['redis_host'] = '{{ template "gitlab.redis.fullname" . }}'
             gitlab_rails['redis_password'] = ENV['REDIS_PASSWORD']
             #redis['password'] = ENV['REDIS_PASSWORD']
 

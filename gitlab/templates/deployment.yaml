@@ -131,19 +131,19 @@ spec:
             registry['registry_http_addr'] = '0.0.0.0:8105'
 
             postgresql['enable'] = false
-            gitlab_rails['db_host'] = {{ template "fullname" . }}-postgresql
+            gitlab_rails['db_host'] = {{ template "gitlab.postgresql.fullname" . }}
             gitlab_rails['db_password'] = ENV['POSTGRES_PASSWORD']
             gitlab_rails['db_username'] = ENV['POSTGRES_USER']
             gitlab_rails['db_database'] = ENV['POSTGRES_DB']
 
             redis['enable'] = false
-            gitlab_rails['redis_host'] = {{ template "fullname" . }}-redis
+            gitlab_rails['redis_host'] = {{ template "gitlab.redis.fullname" . }}
             gitlab_rails['redis_password'] = ENV['REDIS_PASSWORD']
             #redis['password'] = ENV['REDIS_PASSWORD']
 
             mattermost['file_directory'] = '/gitlab-data/mattermost';
             mattermost['sql_driver_name'] = 'postgres';
-            mattermost['sql_data_source'] = "user=#{ENV['POSTGRES_USER']} host={{ template "fullname" . }}-postgresql port=5432 dbname=mattermost_production password=#{ENV['POSTGRES_PASSWORD']} sslmode=disable";
+            mattermost['sql_data_source'] = "user=#{ENV['POSTGRES_USER']} host={{ template "gitlab.postgresql.fullname" . }} port=5432 dbname=mattermost_production password=#{ENV['POSTGRES_PASSWORD']} sslmode=disable";
             mattermost['gitlab_enable'] = true;
             mattermost['gitlab_secret'] = ENV['MATTERMOST_APP_SECRET'];
             mattermost['gitlab_id'] = ENV['MATTERMOST_APP_UID'];
@@ -172,11 +172,11 @@ spec:
             prometheus['listen_address'] = '0.0.0.0:9090'
             postgres_exporter['enable'] = true
             postgres_exporter['env'] = {
-              'DATA_SOURCE_NAME' => "user=#{ENV['POSTGRES_USER']} host={{ template "fullname" . }}-postgresql port=5432 dbname=#{ENV['POSTGRES_DB']} password=#{ENV['POSTGRES_PASSWORD']} sslmode=disable"
+              'DATA_SOURCE_NAME' => "user=#{ENV['POSTGRES_USER']} host={{ template "gitlab.postgresql.fullname" . }} port=5432 dbname=#{ENV['POSTGRES_DB']} password=#{ENV['POSTGRES_PASSWORD']} sslmode=disable"
             }
             redis_exporter['enable'] = true
             redis_exporter['flags'] = {
-              'redis.addr' => "{{ template "fullname" . }}-redis:6379",
+              'redis.addr' => "{{ template "gitlab.redis.fullname" . }}:6379",
             }
         - name: GITLAB_POST_RECONFIGURE_CODE
           value: |

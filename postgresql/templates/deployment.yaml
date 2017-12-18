@@ -33,12 +33,8 @@ spec:
         - name: POSTGRES_USER
           value: {{ default "postgres" .Values.postgresUser | quote }}
           # Required for pg_isready in the health probes.
-        - name: PGUSER
-          value: {{ default "postgres" .Values.postgresUser | quote }}
         - name: POSTGRES_DB
           value: {{ default "" .Values.postgresDatabase | quote }}
-        - name: POSTGRES_INITDB_ARGS
-          value: {{ default "" .Values.postgresInitdbArgs | quote }}
         - name: PGDATA
           value: /var/lib/postgresql/data/pgdata
         - name: DB_EXTENSION
@@ -48,8 +44,6 @@ spec:
             secretKeyRef:
               name: {{ template "postgresql.fullname" . }}
               key: postgres-password
-        - name: POD_IP
-          valueFrom: { fieldRef: { fieldPath: status.podIP } }
         ports:
         - name: postgresql
           containerPort: 5432

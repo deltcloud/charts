@@ -50,7 +50,7 @@ persistence:
   # storageClass: "-"
   accessMode: ReadWriteOnce
   size: 8Gi
-  subPath: "postgresql-db"
+  subPath: "postgres"
 
   # annotations: {}
 

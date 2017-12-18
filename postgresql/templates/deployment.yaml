@@ -73,7 +73,7 @@ spec:
 {{ toYaml .Values.resources | indent 10 }}
         volumeMounts:
         - name: data
-          mountPath: /var/lib/postgresql/data/pgdata
+          mountPath: /var/lib/postgresql/data
           subPath: {{ .Values.persistence.subPath }}
         - name: initdb
           mountPath: /docker-entrypoint-initdb.d

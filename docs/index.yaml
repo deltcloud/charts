@@ -2,9 +2,9 @@ apiVersion: v1
 entries:
   gitlab:
   - apiVersion: v1
-    created: 2017-12-18T14:23:54.47255403+08:00
+    created: 2017-12-18T14:25:27.290442095+08:00
     description: GitLab Omnibus all-in-one bundle
-    digest: 693a4433ab7966b2931bba313675a5f0a6bcbd9b190cba22be0658e7fd3b1128
+    digest: 1fb905aba128e3cb00f266d0c476a7272d1315a047ff706cdb89b2b7985d500b
     home: https://about.gitlab.com
     icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png
     keywords:
@@ -32,7 +32,7 @@ entries:
     version: 0.1.36
   gitlab-omnibus:
   - apiVersion: v1
-    created: 2017-12-18T14:23:54.473482514+08:00
+    created: 2017-12-18T14:25:27.291315621+08:00
     description: GitLab Omnibus all-in-one bundle
     digest: 1e760e6f83e6aa6662c180aa4fff74685293d4dedf5ab344a9dbc4879da4351c
     home: https://about.gitlab.com
@@ -62,7 +62,7 @@ entries:
     version: 0.1.36
   harbor:
   - apiVersion: v1
-    created: 2017-12-18T14:23:54.474084949+08:00
+    created: 2017-12-18T14:25:27.292009266+08:00
     description: A Helm chart for Kubernetes
     digest: b646f6277687e5e5904293189a6e8b448bc118ae8e71ae0b49f3ec92acf242c4
     name: harbor
@@ -70,7 +70,7 @@ entries:
     - https://deltcloud.github.io/charts/harbor-0.1.0.tgz
     version: 0.1.0
   postgresql:
-  - created: 2017-12-18T14:23:54.474576587+08:00
+  - created: 2017-12-18T14:25:27.292557344+08:00
     description: Object-relational database management system (ORDBMS) with an emphasis
       on extensibility and on standards-compliance.
     digest: b179732e717c2ca5ab494db8655697a309b7d61b3dcc0805d5caf5a2e901c73c
@@ -92,4 +92,4 @@ entries:
     urls:
     - https://deltcloud.github.io/charts/postgresql-0.8.5.tgz
     version: 0.8.5
-generated: 2017-12-18T14:23:54.469647298+08:00
+generated: 2017-12-18T14:25:27.288821808+08:00

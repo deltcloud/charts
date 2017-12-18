@@ -84,6 +84,8 @@ resources:
     memory: 256Mi
     cpu: 100m
 
+dbExtensions: pg_trgm
+
 service:
   type: ClusterIP
   port: 5432

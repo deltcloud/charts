@@ -1,3 +1,4 @@
+{{- if .Values.initDb.enabled -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -8,6 +9,5 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
-  01_create_mattermost_production.sql: |
-    CREATE DATABASE mattermost_production WITH OWNER gitlab;
-
+  00000000-initdb.sql: {{ .Values.initDb.sql }}
+{{- end -}}

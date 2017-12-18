@@ -23,6 +23,7 @@ gitlab: ce
 gitlabCEImage: gitlab/gitlab-ce:10.1.0-ce.0
 gitlabEEImage: gitlab/gitlab-ee:10.1.0-ee.0
 initialSharedRunnersRegistrationToken: "tQtCbx5UZy_ByS7FyzUH"
+mattermostDb: mattermost_production
 mattermostAppSecret: NDl1ZjNtenMxcWR6NXZnbw==
 mattermostAppUID: aadas
 gitlabRunnerImage: gitlab/gitlab-runner:alpine-v10.1.0
@@ -98,12 +99,16 @@ postgresql:
   imagePullPolicy: "IfNotPresent"
   postgresUser: gitlab
   postgresPassword: "postgrespassword123"
-  postgresDatabase: "mattermost_production"
-  env:
-    DB_EXTENSION: pg_trgm
+  postgresDatabase: gitlab-production
+  dbExtensions: pg_trgm
   persistence:
     storageClass: default
     size: 8Gi
+  initDb:
+    enabled: true
+    sql: |
+      
+      CREATE DATABASE mattermost_production WITH OWNER gitlab;
 
 redis:
   image: "registry.cn-hangzhou.aliyuncs.com/linkcloud/bitnami_redis:4.0.6-r0"

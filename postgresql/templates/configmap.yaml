@@ -9,6 +9,6 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
-  0000.sql: {{ .Values.initDb.sql }}
+  {{ template "postgresql.fullname" . }}: {{ .Values.initDb.sql }}
 
 {{- end -}}

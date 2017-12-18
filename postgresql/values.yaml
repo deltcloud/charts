@@ -109,3 +109,8 @@ networkPolicy:
 nodeSelector: {}
 tolerations: []
 affinity: {}
+
+initDb:
+  enabled: false
+  sql: |
+    CREATE DATABASE test WITH OWNER postgres;

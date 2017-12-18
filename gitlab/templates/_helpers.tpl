@@ -27,3 +27,4 @@ Template for outputing the gitlabUrl
 {{- printf "http://%s.%s:8005/" $fullname  .Release.Namespace | quote -}}
 {{- end -}}
 {{- end -}}
+

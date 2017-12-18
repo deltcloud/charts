@@ -79,9 +79,11 @@ spec:
         - name: data
           mountPath: /var/lib/postgresql/data
           subPath: {{ .Values.persistence.subPath }}
+        {{- if .Values.initDb.enabled }}
         - name: initdb
           mountPath: /docker-entrypoint-initdb.d
           readOnly: true
+        {{- end }}
 {{- if .Values.metrics.enabled }}
       - name: metrics
         image: "{{ .Values.metrics.image }}:{{ .Values.metrics.imageTag }}"
@@ -110,9 +112,11 @@ spec:
       {{- else }}
         emptyDir: {}
       {{- end }}
+      {{- if .Values.initDb.enabled }}
       - name: initdb
         configMap:
           name: {{ template "postgresql.fullname" . }}-initdb
+      {{- end }}
       {{- if and .Values.metrics.enabled .Values.metrics.customMetrics }}
       - name: custom-metrics
         secret:

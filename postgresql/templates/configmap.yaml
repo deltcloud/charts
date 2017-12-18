@@ -9,5 +9,7 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
-  00000000-initdb.sql: {{ .Values.initDb.sql }}
+  01_create_mattermost_production.sql: |
+    CREATE DATABASE mattermost_production WITH OWNER gitlab;
+
 {{- end -}}

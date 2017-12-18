@@ -70,6 +70,7 @@ spec:
             - -h
             - localhost
             - -U
+            - postgres
           initialDelaySeconds: 5
           timeoutSeconds: 1
         resources:

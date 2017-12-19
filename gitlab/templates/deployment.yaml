@@ -248,14 +248,14 @@ spec:
           claimName: {{ template "fullname" . }}-storage
       {{- else }}
         emptyDir: {}
-      {{- end -}}
+      {{- end }}
       - name: registry
       {{- if .Values.persistence.registry.enabled }}
         persistentVolumeClaim:
           claimName: {{ template "fullname" . }}-registry-storage
       {{- else }}
         emptyDir: {}
-      {{- end -}}
+      {{- end }}
       - name: config
       {{- if .Values.persistence.config.enabled }}
         persistentVolumeClaim:

@@ -243,11 +243,23 @@ spec:
           timeoutSeconds: 1
       volumes:
       - name: data
+      {{- if .Values.persistence.storage.enabled }}
         persistentVolumeClaim:
           claimName: {{ template "fullname" . }}-storage
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}
       - name: registry
+      {{- if .Values.persistence.registry.enabled }}
         persistentVolumeClaim:
           claimName: {{ template "fullname" . }}-registry-storage
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}
       - name: config
+      {{- if .Values.persistence.config.enabled }}
         persistentVolumeClaim:
           claimName: {{ template "fullname" . }}-config-storage
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}

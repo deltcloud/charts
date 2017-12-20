@@ -42,7 +42,7 @@ spec:
           httpGet:
             path: /
             port: 8443
-            scheme: HTTPs
+            scheme: HTTPS
           initialDelaySeconds: 30
           timeoutSeconds: 30
         ports:

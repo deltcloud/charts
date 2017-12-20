@@ -8,6 +8,7 @@ metadata:
     release: "{{ .Release.Name }}"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     kubernetes.io/cluster-service: "true"
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   strategy:
@@ -28,7 +29,7 @@ spec:
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 10 }}
       containers:
-      - name: main
+      - name: kubernetes-dashboard
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         resources:
@@ -38,6 +39,8 @@ spec:
         volumeMounts:
         - name: kubernetes-dashboard-certs
           mountPath: /certs
+        - mountPath: /tmp
+          name: tmp-volume
         livenessProbe:
           httpGet:
             path: /
@@ -52,3 +55,5 @@ spec:
       - name: kubernetes-dashboard-certs
         secret:
           secretName: {{ template "kubernetes-dashboard.fullname" . }}
+      - name: tmp-volume
+        emptyDir: {}

@@ -12,7 +12,7 @@ spec:
   type: {{ .Values.serviceType }}
   ports:
   - port: {{ .Values.httpPort }}
-    targetPort: http
+    targetPort: 8443
 {{- if hasKey .Values "nodePort" }}
     nodePort: {{ .Values.nodePort }}
 {{- end }}

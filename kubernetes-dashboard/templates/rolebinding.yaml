@@ -1,15 +1,16 @@
 {{- if .Values.rbac.create }}
+kind: Role
 apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRole
 metadata:
   labels:
     app: {{ template "kubernetes-dashboard.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-  name: {{ template "kubernetes-dashboard.fullname" . }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-minimal
+  namespace: {{ .Release.Namespace }}
 rules:
-# Allow Dashboard to create 'kubernetes-dashboard-key-holder' secret.
+  # Allow Dashboard to create 'kubernetes-dashboard-key-holder' secret.
 - apiGroups: [""]
   resources: ["secrets"]
   verbs: ["create"]
@@ -20,9 +21,9 @@ rules:
   # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
 - apiGroups: [""]
   resources: ["secrets"]
-  resourceNames: ["kubernetes-dashboard-key-holder", "kubernetes-dashboard-certs"]
+  resourceNames: ["kubernetes-dashboard-key-holder", "{{ template "kubernetes-dashboard.fullname" . }}-certs"]
   verbs: ["get", "update", "delete"]
-  # Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.
+# Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.
 - apiGroups: [""]
   resources: ["configmaps"]
   resourceNames: ["kubernetes-dashboard-settings"]
@@ -37,6 +38,47 @@ rules:
   resourceNames: ["heapster", "http:heapster:", "https:heapster:"]
   verbs: ["get"]
 
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  labels:
+    app: {{ template "kubernetes-dashboard.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "kubernetes-dashboard.fullname" . }}-minimal
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "kubernetes-dashboard.fullname" . }}
+    namespace: {{ .Release.Namespace }}
+
+---
+# ------------------- Gross Hack For anonymous auth through api proxy ------------------- #
+# Allows users to reach login page and other proxied dashboard URLs
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  labels:
+    app: {{ template "kubernetes-dashboard.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-anonymous
+  namespace: {{ .Release.Namespace }}
+rules:
+- apiGroups: [""]
+  resources: ["services/proxy"]
+  resourceNames: ["http:{{ template "kubernetes-dashboard.fullname" . }}:","https:{{ template "kubernetes-dashboard.fullname" . }}:"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- nonResourceURLs: ["/ui", "/ui/*", "/api/v1/namespaces/{{ .Release.Namespace }}/services/http:{{ template "kubernetes-dashboard.fullname" . }}:/proxy/*"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -48,12 +90,12 @@ metadata:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
   name: {{ template "kubernetes-dashboard.fullname" . }}
+  namespace: {{ .Release.Namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ template "kubernetes-dashboard.fullname" . }}
+  name: {{ template "kubernetes-dashboard.fullname" . }}-anonymous
 subjects:
-  - kind: ServiceAccount
-    name: {{ template "kubernetes-dashboard.fullname" . }}
-    namespace: {{ .Release.Namespace }}
+  - kind: User
+    name: system:anonymous
 {{- end -}}

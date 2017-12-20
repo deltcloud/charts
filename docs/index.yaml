@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   gitlab:
   - apiVersion: v1
-    created: 2017-12-19T13:38:00.581328925+08:00
+    created: 2017-12-20T13:52:01.281262115+08:00
     description: GitLab Omnibus all-in-one bundle
     digest: 0451cc60a6bbc4b633c33ae160c5950e1cc87cb7875afd1202c92d85bf75a011
     home: https://about.gitlab.com
@@ -32,7 +32,7 @@ entries:
     version: 0.1.36
   gitlab-omnibus:
   - apiVersion: v1
-    created: 2017-12-19T13:38:00.582192328+08:00
+    created: 2017-12-20T13:52:01.282223825+08:00
     description: GitLab Omnibus all-in-one bundle
     digest: 1e760e6f83e6aa6662c180aa4fff74685293d4dedf5ab344a9dbc4879da4351c
     home: https://about.gitlab.com
@@ -62,15 +62,30 @@ entries:
     version: 0.1.36
   harbor:
   - apiVersion: v1
-    created: 2017-12-19T13:38:00.582888846+08:00
+    created: 2017-12-20T13:52:01.282944456+08:00
     description: A Helm chart for Kubernetes
     digest: b646f6277687e5e5904293189a6e8b448bc118ae8e71ae0b49f3ec92acf242c4
     name: harbor
     urls:
     - https://deltcloud.github.io/charts/harbor-0.1.0.tgz
     version: 0.1.0
+  kubernetes-dashboard:
+  - appVersion: 1.7.1
+    created: 2017-12-20T13:52:01.283344614+08:00
+    description: General-purpose web UI for Kubernetes clusters
+    digest: 29241ac90a8f504ea4ff48ba9a21fbac35270ac167af2c43ea05de778c225db7
+    keywords:
+    - kubernetes
+    - dashboard
+    maintainers:
+    - email: Kevin.Fox@pnnl.gov
+      name: kfox1111
+    name: kubernetes-dashboard
+    urls:
+    - https://deltcloud.github.io/charts/kubernetes-dashboard-0.4.2.tgz
+    version: 0.4.2
   postgresql:
-  - created: 2017-12-19T13:38:00.583426278+08:00
+  - created: 2017-12-20T13:52:01.283940652+08:00
     description: Object-relational database management system (ORDBMS) with an emphasis
       on extensibility and on standards-compliance.
     digest: e6cfed0cc8d45a586d250df240f5d15e69097391c862c921c886112ca716c16d
@@ -92,4 +107,4 @@ entries:
     urls:
     - https://deltcloud.github.io/charts/postgresql-0.8.5.tgz
     version: 0.8.5
-generated: 2017-12-19T13:38:00.579707424+08:00
+generated: 2017-12-20T13:52:01.279631511+08:00

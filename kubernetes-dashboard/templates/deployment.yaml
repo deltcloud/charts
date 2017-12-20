@@ -39,18 +39,14 @@ spec:
         - name: kubernetes-dashboard-certs
           mountPath: /certs
         livenessProbe:
-          failureThreshold: 3
           httpGet:
             path: /
-            port: 9090
-            scheme: HTTP
+            port: 8443
+            scheme: HTTPs
           initialDelaySeconds: 30
-          periodSeconds: 10
-          successThreshold: 1
           timeoutSeconds: 30
         ports:
-        - name: http
-          containerPort: 9090
+        - containerPort: 8443
           protocol: TCP
       volumes:
       - name: kubernetes-dashboard-certs

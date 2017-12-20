@@ -35,6 +35,9 @@ spec:
 {{ toYaml .Values.resources | indent 10 }}
         args:
           - --auto-generate-certificates
+        volumeMounts:
+        - name: kubernetes-dashboard-certs
+          mountPath: /certs
         livenessProbe:
           failureThreshold: 3
           httpGet:
@@ -49,3 +52,7 @@ spec:
         - name: http
           containerPort: 9090
           protocol: TCP
+      Volumes:
+      - name: kubernetes-dashboard-certs
+        secret:
+          secretName: {{ template "kubernetes-dashboard.fullname" . }}

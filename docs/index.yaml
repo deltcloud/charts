@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   gitlab:
   - apiVersion: v1
-    created: 2017-12-21T21:39:51.279989109+08:00
+    created: 2017-12-21T22:34:47.651561176+08:00
     description: GitLab Omnibus all-in-one bundle
     digest: 0451cc60a6bbc4b633c33ae160c5950e1cc87cb7875afd1202c92d85bf75a011
     home: https://about.gitlab.com
@@ -32,7 +32,7 @@ entries:
     version: 0.1.36
   gitlab-omnibus:
   - apiVersion: v1
-    created: 2017-12-21T21:39:51.280915135+08:00
+    created: 2017-12-21T22:34:47.652450164+08:00
     description: GitLab Omnibus all-in-one bundle
     digest: 1e760e6f83e6aa6662c180aa4fff74685293d4dedf5ab344a9dbc4879da4351c
     home: https://about.gitlab.com
@@ -60,9 +60,25 @@ entries:
     urls:
     - https://deltcloud.github.io/charts/gitlab-omnibus-0.1.36.tgz
     version: 0.1.36
+  grafana:
+  - created: 2017-12-21T22:34:47.653049968+08:00
+    description: The leading tool for querying and visualizing time series and metrics.
+    digest: bc7bd5892e291ab30266b2c23aaed3dc99d102172c7c80d7766e30c257ec176a
+    engine: gotpl
+    home: https://grafana.net
+    icon: https://raw.githubusercontent.com/grafana/grafana/master/public/img/logo_transparent_400x.png
+    maintainers:
+    - email: zanhsieh@gmail.com
+      name: Ming Hsieh
+    name: grafana
+    sources:
+    - https://github.com/grafana/grafana
+    urls:
+    - https://deltcloud.github.io/charts/grafana-0.5.3.tgz
+    version: 0.5.3
   harbor:
   - apiVersion: v1
-    created: 2017-12-21T21:39:51.281590122+08:00
+    created: 2017-12-21T22:34:47.653726755+08:00
     description: A Helm chart for Kubernetes
     digest: b646f6277687e5e5904293189a6e8b448bc118ae8e71ae0b49f3ec92acf242c4
     name: harbor
@@ -71,7 +87,7 @@ entries:
     version: 0.1.0
   heapster:
   - apiVersion: v1
-    created: 2017-12-21T21:39:51.282047222+08:00
+    created: 2017-12-21T22:34:47.654130675+08:00
     description: Heapster enables Container Cluster Monitoring and Performance Analysis.
     digest: 8f93b643380cdb32e74c2200695a6a74633908dbc01e901273ce641588692607
     engine: gotpl
@@ -91,7 +107,7 @@ entries:
     version: 0.2.3
   kubernetes-dashboard:
   - appVersion: 1.7.1
-    created: 2017-12-21T21:39:51.282444943+08:00
+    created: 2017-12-21T22:34:47.654535387+08:00
     description: General-purpose web UI for Kubernetes clusters
     digest: 1d36ff8c0f2a6896464e336623935c057e3cae1af1ea1a6101d7a162e43fc7b7
     keywords:
@@ -105,7 +121,7 @@ entries:
     - https://deltcloud.github.io/charts/kubernetes-dashboard-0.4.2.tgz
     version: 0.4.2
   postgresql:
-  - created: 2017-12-21T21:39:51.282990047+08:00
+  - created: 2017-12-21T22:34:47.655082894+08:00
     description: Object-relational database management system (ORDBMS) with an emphasis
       on extensibility and on standards-compliance.
     digest: e6cfed0cc8d45a586d250df240f5d15e69097391c862c921c886112ca716c16d
@@ -128,7 +144,7 @@ entries:
     - https://deltcloud.github.io/charts/postgresql-0.8.5.tgz
     version: 0.8.5
   prometheus:
-  - created: 2017-12-21T21:39:51.284220545+08:00
+  - created: 2017-12-21T22:34:47.656168617+08:00
     description: Prometheus is a monitoring system and time series database.
     digest: 263223fa17137c9c0e0b7f854fdee88745fee4f3d55c0d3e9798940b3e0d173e
     engine: gotpl
@@ -146,4 +162,4 @@ entries:
     urls:
     - https://deltcloud.github.io/charts/prometheus-4.6.14.tgz
     version: 4.6.14
-generated: 2017-12-21T21:39:51.277158944+08:00
+generated: 2017-12-21T22:34:47.649945206+08:00

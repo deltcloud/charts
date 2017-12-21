@@ -9,7 +9,7 @@ imagePullPolicy: "IfNotPresent"
 
 nodeSelector: {}
 
-httpPort: 443
+httpPort: 80
 
 serviceType: ClusterIP
 

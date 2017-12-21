@@ -29,31 +29,21 @@ spec:
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 10 }}
       containers:
-      - name: kubernetes-dashboard
+      - name: main
         image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}
-        args:
-          - --auto-generate-certificates
-        volumeMounts:
-        - name: kubernetes-dashboard-certs
-          mountPath: /certs
-        - mountPath: /tmp
-          name: tmp-volume
         livenessProbe:
           httpGet:
             path: /
-            port: 8443
-            scheme: HTTPS
+            port: 9090
+            scheme: HTTP
           initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
           timeoutSeconds: 30
         ports:
-        - containerPort: 8443
+        - name: http
+          containerPort: 9090
           protocol: TCP
-      volumes:
-      - name: kubernetes-dashboard-certs
-        secret:
-          secretName: {{ template "kubernetes-dashboard.fullname" . }}-certs
-      - name: tmp-volume
-        emptyDir: {}

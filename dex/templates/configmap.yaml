@@ -19,14 +19,14 @@ data:
       ssl:
         mode: disable
   web:
-    http: 0.0.0.0:5556
+    http: "0.0.0.0:5556"
     AllowedOrigins: ["*"]
   OAuth2:
     SkipApprovalScreen: true
     responseTypes: ["code", "token", "id_token"]
   PrivateKeyPath: ./bin/key/pkcs1_private.pem
   grpc:
-    addr: 0.0.0.0:5557
+    addr: "0.0.0.0:5557"
     tlsCert: ./bin/key/server.crt
     tlsKey: ./bin/key/server.key
     tlsClientCA: ./bin/key/ca.crt

@@ -26,6 +26,7 @@ spec:
         volumeMounts:
         - name: config
           mountPath: /dev/bin/config-dev.yaml
+          key: config
         resources:
 {{ toYaml .Values.resources | indent 10 }}
       volumes:

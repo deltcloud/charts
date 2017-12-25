@@ -25,7 +25,7 @@ spec:
           name: client
         volumeMounts:
         - name: config
-          mountPath: /dex/bin
+          mountPath: /dex/bin/config-dev.yaml
         resources:
 {{ toYaml .Values.resources | indent 10 }}
       volumes:
@@ -34,4 +34,3 @@ spec:
           name: {{ template "fullname" . }}
           items:
           - key: config
-            path: config-dev.yaml

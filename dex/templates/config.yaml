@@ -15,7 +15,7 @@ storage:
   config:
     Host: {{ template "postgresql.dex.fullname" . }}
     database: {{ .Values.postgresql.postgresDatabase }}
-    user: {{ .values.postgresql.postgresUser }}
+    user: {{ .Values.postgresql.postgresUser }}
     password: {{ .Values.postgresql.postgresPassword }}
     ssl:
       mode: disable

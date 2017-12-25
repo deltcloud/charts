@@ -12,7 +12,7 @@ data:
   storage:
     type: postgres
     config:
-      Host: {{ template "postgresql.dex.fullname" }}
+      Host: {{ template "postgresql.dex.fullname" . }}
       database: {{ .Values.postgresql.postgresDatabase }}
       user: {{ .Values.postgresql.postgresUser }}
       password: {{ .Values.postgresql.postgresPassword }}

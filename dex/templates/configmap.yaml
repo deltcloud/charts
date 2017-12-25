@@ -13,27 +13,27 @@ data:
     type: postgres
     config:
       Host: {{ template "postgresql.dex.fullname" . }}
-      database: {{ .Values.postgresql.postgresDatabase | quote  }}
-      user: {{ .Values.postgresql.postgresUser | quote }}
-      password: {{ .Values.postgresql.postgresPassword |quote }}
+      database: {{ .Values.postgresql.postgresDatabase }}
+      user: {{ .Values.postgresql.postgresUser }}
+      password: {{ .Values.postgresql.postgresPassword }}
       ssl:
         mode: disable
   web:
-    http: "0.0.0.0:5556"
-    AllowedOrigins: "[*]"
+    http: 0.0.0.0:5556
+    AllowedOrigins: ["*"]
   OAuth2:
     SkipApprovalScreen: true
-    responseTypes: "["code", "token", "id_token"]"
+    responseTypes: ["code","token","id_token"]
   PrivateKeyPath: ./bin/key/pkcs1_private.pem
   grpc:
-    addr: "0.0.0.0:5557"
+    addr: 0.0.0.0:5557
     tlsCert: ./bin/key/server.crt
     tlsKey: ./bin/key/server.key
     tlsClientCA: ./bin/key/ca.crt
   connectors:
-    type: grpc
+  - type: grpc
     id: grpc
     name: grpc
     config:
-      endpoint: "127.0.0.1:50051"
+      endpoint: 127.0.0.1:50051
   enablePasswordDB: false

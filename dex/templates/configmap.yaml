@@ -8,11 +8,11 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 data:
-  issuer: {{ .Values.issuer |quote }}
+  issuer: {{ .Values.issuer }}
   storage:
     type: postgres
     config:
-      Host: {{ template "postgresql.dex.fullname" . }}
+      Host: {{ template "postgresql.dex.fullname" }}
       database: {{ .Values.postgresql.postgresDatabase }}
       user: {{ .Values.postgresql.postgresUser }}
       password: {{ .Values.postgresql.postgresPassword }}
@@ -25,7 +25,6 @@ data:
     SkipApprovalScreen: true
     responseTypes: ["code", "token", "id_token"]
   PrivateKeyPath: ./bin/key/pkcs1_private.pem
-
   grpc:
     addr: 0.0.0.0:5557
     tlsCert: ./bin/key/server.crt
@@ -38,4 +37,3 @@ data:
     config:
       endpoint: "127.0.0.1:50051"
   enablePasswordDB: false
-

@@ -19,7 +19,7 @@ data:
       ssl:
         mode: disable
   web:
-    http: "0.0.0.0:5556"
+    http: 0.0.0.0:5556
     AllowedOrigins: "["*"]"
   OAuth2:
     SkipApprovalScreen: true

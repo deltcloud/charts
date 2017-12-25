@@ -1,0 +1,6 @@
+dependencies:
+- name: postgresql
+  repository: https://deltcloud.github.io/charts
+  version: 0.8.5
+digest: sha256:bbe2782d0558db54de6e8471009e753b2f9d8da64419bd55d8ec0c3df6087291
+generated: 2017-12-25T19:39:58.143776386+08:00

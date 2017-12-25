@@ -1,0 +1,16 @@
+issuer: http://auth.netbank.cn
+image: registry.cn-hangzhou.aliyuncs.com/linkcloud/dex
+imageTag: 1.0.0
+imagePullPolicy: "IfNotPresent"
+
+
+postgresql:
+  image: "registry.cn-hangzhou.aliyuncs.com/linkcloud/postgres"
+  imageTag: "9.6.2"
+  imagePullPolicy: "IfNotPresent"
+  postgresUser: dex
+  postgresPassword: "dex123"
+  postgresDatabase: dex_db
+  persistence:
+    storageClass: default
+    size: 8Gi

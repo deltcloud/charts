@@ -1,0 +1,4 @@
+dependencies:
+- name: postgresql
+  version: 0.8.5
+  repository: https://deltcloud.github.io/charts

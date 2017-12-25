@@ -15,18 +15,19 @@ spec:
   - hosts:
     - {{ .Values.token_url }}
     - {{ .Values.client_url }}
+    secretName: dex-lts
   rules:
   - host: {{ .Values.token_url }}
     http:
       paths:
-        -path: /
-        backend:
-          serviceName: {{ template "fullname" . }}
-          servicePort: 5556
+        - path: /
+          backend:
+            serviceName: {{ template "fullname" . }}
+            servicePort: 5556
   - host: {{ .Values.client_url }}
     http:
       paths:
-        -path: /
-        backend:
-          serviceName: {{ template "fullname" . }}
-          servicePort: 5557
+        - path: /
+          backend:
+            serviceName: {{ template "fullname" . }}
+            servicePort: 5557

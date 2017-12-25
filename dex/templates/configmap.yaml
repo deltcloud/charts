@@ -31,9 +31,9 @@ data:
     tlsKey: ./bin/key/server.key
     tlsClientCA: ./bin/key/ca.crt
   connectors:
-  - type: grpc
-    id: grpc
-    name: grpc
-    config:
-      endpoint: "127.0.0.1:50051"
+    type: grpc
+      id: grpc
+      name: grpc
+      config:
+        endpoint: "127.0.0.1:50051"
   enablePasswordDB: false

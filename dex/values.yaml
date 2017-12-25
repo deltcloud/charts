@@ -1,4 +1,6 @@
 issuer: "http://auth.netbank.cn"
+token_url: token.example.com
+client_url: client.example.com
 image: registry.cn-hangzhou.aliyuncs.com/linkcloud/dex
 imageTag: 1.0.0
 imagePullPolicy: "IfNotPresent"

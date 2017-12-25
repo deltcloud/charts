@@ -25,11 +25,13 @@ spec:
           name: client
         volumeMounts:
         - name: config
-          mountPath: /dev/bin/config-dev.yaml
-          key: config
+          mountPath: /dex/bin
         resources:
 {{ toYaml .Values.resources | indent 10 }}
       volumes:
       - name: config
         configMap:
           name: {{ template "fullname" . }}
+          items:
+          - key: config
+            path: config-dev.yaml

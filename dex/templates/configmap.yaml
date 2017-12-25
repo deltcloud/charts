@@ -12,15 +12,15 @@ data:
   storage:
     type: postgres
     config:
-      Host: {{ template "postgresql.dex.fullname" . }}
-      database: {{ .Values.postgresql.postgresDatabase }}
-      user: {{ .Values.postgresql.postgresUser }}
-      password: {{ .Values.postgresql.postgresPassword }}
+      Host: {{ template "postgresql.dex.fullname" . | quote }}
+      database: {{ .Values.postgresql.postgresDatabase | quote  }}
+      user: {{ .Values.postgresql.postgresUser | quote }}
+      password: {{ .Values.postgresql.postgresPassword |quote }}
       ssl:
         mode: disable
   web:
-    http: 0.0.0.0:5556
-    AllowedOrigins: "["*"]"
+    http: "0.0.0.0:5556"
+    AllowedOrigins: "[*]"
   OAuth2:
     SkipApprovalScreen: true
     responseTypes: "["code", "token", "id_token"]"

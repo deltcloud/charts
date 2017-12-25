@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: {{ template "fullname" . }}
+        name: {{ template "fullname" . }}
     spec:
       containers:
       - name: {{ template "fullname" . }}

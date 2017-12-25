@@ -9,7 +9,7 @@ metadata:
     heritage: "{{ .Release.Service }}"
 spec:
   selector:
-    name: {{ template "fullname" . }}
+    app: {{ template "fullname" . }}
   ports:
     - name: token
       port: 5556

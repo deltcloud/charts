@@ -23,7 +23,7 @@ data:
     AllowedOrigins: ["*"]
   OAuth2:
     SkipApprovalScreen: true
-    responseTypes: ["code","token","id_token"]
+  responseTypes: ["code","token","id_token"]
   PrivateKeyPath: ./bin/key/pkcs1_private.pem
   grpc:
     addr: 0.0.0.0:5557

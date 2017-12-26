@@ -429,7 +429,6 @@ server:
     ## Prometheus server data Persistent Volume mount root path
     ##
     mountPath: /data
-    mountPathLegacy: /data
 
     ## Prometheus server data Persistent Volume size
     ##

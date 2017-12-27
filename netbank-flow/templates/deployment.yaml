@@ -45,7 +45,7 @@ spec:
           args:
           {{- if not .Values.remote_storage.enabled }}
             - --storage.tsdb.path={{ .Values.server.persistentVolume.mountPath }}
-            - --storage.local.retention={{ .Values.server.retention }}
+            - --storage.tsdb.retention={{ .Values.server.retention }}
           {{- end }}
             - --config.file=/etc/config/prometheus.yml
             - --web.console.libraries=/etc/prometheus/console_libraries

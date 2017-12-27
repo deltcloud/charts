@@ -66,6 +66,8 @@ spec:
             timeoutSeconds: 30
           resources:
 {{ toYaml .Values.server.resources | indent 12 }}
+          securityContext:
+            privileged: true
           volumeMounts:
             - name: config-volume
               mountPath: /etc/config

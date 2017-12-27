@@ -7,7 +7,7 @@ metadata:
     component: "{{ .Values.server.name }}"
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-  name: {{ template "prometheus.server.fullname" . }}
+  name: {{ template "prometheus.fullname" . }}
 spec:
   replicas: {{ .Values.server.replicaCount }}
   {{- if .Values.server.strategy }}
@@ -25,7 +25,6 @@ spec:
         component: "{{ .Values.server.name }}"
         release: {{ .Release.Name }}
     spec:
-      serviceAccountName: {{ if .Values.rbac.create }}{{ template "prometheus.server.fullname" . }}{{ else }}"{{ .Values.server.serviceAccountName }}"{{ end }}
       containers:
         - name: {{ template "prometheus.name" . }}-{{ .Values.server.name }}-{{ .Values.configmapReload.name }}
           image: "{{ .Values.configmapReload.image.repository }}:{{ .Values.configmapReload.image.tag }}"
@@ -44,14 +43,11 @@ spec:
           image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
           imagePullPolicy: "{{ .Values.server.image.pullPolicy }}"
           args:
-          {{- if or .Values.alertmanager.enabled .Values.server.alertmanagerURL }}
-            - --alertmanager.url={{- if .Values.alertmanager.enabled }}http://{{ template "prometheus.alertmanager.fullname" . }}:{{ .Values.alertmanager.service.servicePort }}{{ .Values.alertmanager.prefixURL }}{{- else }}{{ .Values.server.alertmanagerURL }}{{- end }}
-          {{- end }}
-          {{- if .Values.server.retention }}
+          {{- if ! .Values.remote_storage.enabled }}
+            - --storage.tsdb.path={{ .Values.server.persistentVolume.mountPath }}
             - --storage.local.retention={{ .Values.server.retention }}
           {{- end }}
             - --config.file=/etc/config/prometheus.yml
-            - --storage.local.path={{ .Values.server.persistentVolume.mountPath }}
             - --web.console.libraries=/etc/prometheus/console_libraries
             - --web.console.templates=/etc/prometheus/consoles
           {{- range $key, $value := .Values.server.extraArgs }}
@@ -73,9 +69,11 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /etc/config
+          {{- if ! .Values.remote_storage.enabled }}
             - name: storage-volume
               mountPath: {{ .Values.server.persistentVolume.mountPath }}
               subPath: "{{ .Values.server.persistentVolume.subPath }}"
+          {{- end }}
           {{- range .Values.server.extraHostPathMounts }}
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
@@ -97,14 +95,16 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: {{ if .Values.server.configMapOverrideName }}{{ .Release.Name }}-{{ .Values.server.configMapOverrideName }}{{- else }}{{ template "prometheus.server.fullname" . }}{{- end }}
+            name: {{ if .Values.server.configMapOverrideName }}{{ .Release.Name }}-{{ .Values.server.configMapOverrideName }}{{- else }}{{ template "prometheus.fullname" . }}{{- end }}
+      {{- if ! .Values.remote_storage.enabled }}
         - name: storage-volume
         {{- if .Values.server.persistentVolume.enabled }}
           persistentVolumeClaim:
-            claimName: {{ if .Values.server.persistentVolume.existingClaim }}{{ .Values.server.persistentVolume.existingClaim }}{{- else }}{{ template "prometheus.server.fullname" . }}{{- end }}
+            claimName: {{ if .Values.server.persistentVolume.existingClaim }}{{ .Values.server.persistentVolume.existingClaim }}{{- else }}{{ template "prometheus.fullname" . }}{{- end }}
         {{- else }}
           emptyDir: {}
         {{- end -}}
+      {{- end -}}
       {{- range .Values.server.extraHostPathMounts }}
         - name: {{ .name }}
           hostPath:

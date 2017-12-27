@@ -45,6 +45,9 @@ spec:
           image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
           imagePullPolicy: "{{ .Values.server.image.pullPolicy }}"
           args:
+          {{- if .Values.lifecycle.enabled }}
+            - --web.enable-lifecycle
+          {{- end }}
           {{- if not .Values.remote_storage.enabled }}
             - --storage.tsdb.path={{ .Values.server.persistentVolume.mountPath }}
             - --storage.tsdb.retention={{ .Values.server.retention }}

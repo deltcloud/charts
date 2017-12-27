@@ -1,6 +1,8 @@
 remote_storage:
   enabled: false
 
+lifecycle:
+  enabled: false
 
 ## Monitors ConfigMap changes and POSTs to a URL
 ## Ref: https://github.com/jimmidyson/configmap-reload

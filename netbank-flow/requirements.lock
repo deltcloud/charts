@@ -1,0 +1,6 @@
+dependencies:
+- name: influxdb
+  repository: https://deltcloud.github.io/charts
+  version: 0.7.0
+digest: sha256:da51c39e24e2aadb83d50b364dcc7ae5aab2e512cce859656864d0092c527433
+generated: 2017-12-27T14:37:43.048238256+08:00

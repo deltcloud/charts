@@ -19,6 +19,6 @@ data:
           - targets:
             - localhost:9090
     remote_write:
-      - url: "http://{{ template "prometheus.influxdb.fullname". }}:8086/api/v1/prom/write?u={{ .Values.influxdb.setDefaultUser.user.username }}&p={{ .Values.influxdb.setDefaultUser.user.password }}&db={{ .Values.influxdbName }}"
+      - url: "http://{{ template "prometheus.influxdb.fullname" . }}:8086/api/v1/prom/write?u={{ .Values.influxdb.setDefaultUser.user.username }}&p={{ .Values.influxdb.setDefaultUser.user.password }}&db={{ .Values.influxdbName }}"
     remote_read:
-      - url: "http://{{ template "prometheus.influxdb.fullname". }}:8086/api/v1/prom/read?u={{ .Values.influxdb.setDefaultUser.user.username }}&p={{ .Values.influxdb.setDefaultUser.user.password }}&db={{ .Values.influxdbName }}"
+      - url: "http://{{ template "prometheus.influxdb.fullname" . }}:8086/api/v1/prom/read?u={{ .Values.influxdb.setDefaultUser.user.username }}&p={{ .Values.influxdb.setDefaultUser.user.password }}&db={{ .Values.influxdbName }}"

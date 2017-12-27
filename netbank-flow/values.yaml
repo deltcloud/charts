@@ -202,4 +202,5 @@ alertmanagerFiles:
       repeat_interval: 3h
 
   
-
+influxdb:
+  dbName: linkcloud

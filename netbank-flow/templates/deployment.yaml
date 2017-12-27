@@ -43,7 +43,7 @@ spec:
           image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
           imagePullPolicy: "{{ .Values.server.image.pullPolicy }}"
           args:
-          {{- if ! .Values.remote_storage.enabled }}
+          {{- if not .Values.remote_storage.enabled }}
             - --storage.tsdb.path={{ .Values.server.persistentVolume.mountPath }}
             - --storage.local.retention={{ .Values.server.retention }}
           {{- end }}
@@ -69,7 +69,7 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /etc/config
-          {{- if ! .Values.remote_storage.enabled }}
+          {{- if not .Values.remote_storage.enabled }}
             - name: storage-volume
               mountPath: {{ .Values.server.persistentVolume.mountPath }}
               subPath: "{{ .Values.server.persistentVolume.subPath }}"
@@ -96,7 +96,7 @@ spec:
         - name: config-volume
           configMap:
             name: {{ if .Values.server.configMapOverrideName }}{{ .Release.Name }}-{{ .Values.server.configMapOverrideName }}{{- else }}{{ template "prometheus.fullname" . }}{{- end }}
-      {{- if ! .Values.remote_storage.enabled }}
+      {{- if not .Values.remote_storage.enabled }}
         - name: storage-volume
         {{- if .Values.server.persistentVolume.enabled }}
           persistentVolumeClaim:

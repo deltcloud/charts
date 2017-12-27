@@ -179,7 +179,7 @@ server:
 
   ## Prometheus data retention period (i.e 360h)
   ##
-  retention: ""
+  retention: "720h"
 
 
 ## alertmanager ConfigMap entries

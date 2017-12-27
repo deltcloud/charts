@@ -1,0 +1,11 @@
+name: netbank-flow
+version: 0.0.1
+description: netbank flow system
+home: http://netbank.cn
+
+sources:
+  - https://github.com/deltcloud/charts
+maintainers:
+  - name: hexiaobo
+    email: hexiaobo@netbank.cn
+engine: gotpl

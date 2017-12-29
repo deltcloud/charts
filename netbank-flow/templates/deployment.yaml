@@ -48,10 +48,8 @@ spec:
           {{- if .Values.lifecycle.enabled }}
             - --web.enable-lifecycle
           {{- end }}
-          {{- if not .Values.remote_storage.enabled }}
             - --storage.tsdb.path={{ .Values.server.persistentVolume.mountPath }}
             - --storage.tsdb.retention={{ .Values.server.retention }}
-          {{- end }}
             - --config.file=/etc/config/prometheus.yml
             - --web.console.libraries=/etc/prometheus/console_libraries
             - --web.console.templates=/etc/prometheus/consoles
@@ -74,11 +72,9 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /etc/config
-          {{- if not .Values.remote_storage.enabled }}
             - name: storage-volume
               mountPath: {{ .Values.server.persistentVolume.mountPath }}
               subPath: "{{ .Values.server.persistentVolume.subPath }}"
-          {{- end }}
           {{- range .Values.server.extraHostPathMounts }}
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
@@ -101,7 +97,6 @@ spec:
         - name: config-volume
           configMap:
             name: {{ if .Values.server.configMapOverrideName }}{{ .Release.Name }}-{{ .Values.server.configMapOverrideName }}{{- else }}{{ template "prometheus.fullname" . }}{{- end }}
-      {{- if not .Values.remote_storage.enabled }}
         - name: storage-volume
         {{- if .Values.server.persistentVolume.enabled }}
           persistentVolumeClaim:
@@ -109,7 +104,6 @@ spec:
         {{- else }}
           emptyDir: {}
         {{- end -}}
-      {{- end -}}
       {{- range .Values.server.extraHostPathMounts }}
         - name: {{ .name }}
           hostPath:

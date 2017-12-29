@@ -10,6 +10,8 @@ metadata:
   name: {{ template "prometheus.fullname" . }}
 data:
   prometheus.yml: |+
+    global:
+      scrape_timeout: 50s
     rule_files:
       - /etc/config/rules
       - /etc/config/alerts

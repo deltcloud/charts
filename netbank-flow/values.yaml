@@ -172,6 +172,10 @@ server:
     tag: v2.0.0
     pullPolicy: IfNotPresent
 
+  ## (optional) alertmanager URL
+  ## only used if alertmanager.enabled = false
+  alertmanagerURL: ""
+
   ## Additional Prometheus server container arguments
   ##
   extraArgs: {}

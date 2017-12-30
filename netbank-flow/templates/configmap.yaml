@@ -15,7 +15,7 @@ data:
     alerting:
       alertmanagers:
         - static_configs:
-          - targets: {{ template "prometheus.alertmanager.fullname" . }}
+          - targets: ["{{ template "prometheus.alertmanager.fullname" . }}"]
     rule_files:
       - /etc/config/rules
       - /etc/config/alerts

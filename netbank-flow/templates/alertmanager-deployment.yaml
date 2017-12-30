@@ -36,9 +36,6 @@ spec:
               value: {{ $value }}
             {{- end }}
           args:
-            {{- if or .Values.alertmanager.enabled .Values.server.alertmanagerURL }}
-            - --alertmanager.url={{- if .Values.alertmanager.enabled }}http://{{ template "prometheus.alertmanager.fullname" . }}:{{ .Values.alertmanager.service.servicePort }}{{ .Values.alertmanager.prefixURL }}{{- else }}{{ .Values.server.alertmanagerURL }}{{- end }}
-          {{- end }}
             - --config.file=/etc/config/alertmanager.yml
             - --storage.path={{ .Values.alertmanager.persistentVolume.mountPath }}
           {{- range $key, $value := .Values.alertmanager.extraArgs }}

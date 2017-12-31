@@ -351,3 +351,31 @@ alertmanagerFiles:
   
 influxdb:
   dbName: linkcloud
+
+snmpExporter:
+  replicaCount: 1
+  name: snmpexporter
+  enabled: true
+  configFiles:
+  podAnnotations: {}
+  service:
+    annotations: {}
+    labels: {}
+    clusterIP: ""
+
+    ## List of IP addresses at which the exporter service is available
+    ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
+    ##
+    externalIPs: []
+
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    servicePort: 9116
+    # nodePort: 30000
+    type: ClusterIP
+  image:
+    repository: registry.cn-hangzhou.aliyuncs.com/linkcloud/snmpexporter
+    tag: 1.0.0
+    pullPolicy: IfNotPresent
+  nodeSelector: {}
+

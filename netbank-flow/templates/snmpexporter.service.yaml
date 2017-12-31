@@ -1,0 +1,49 @@
+{{- if .Values.snmpExporter.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+{{- if .Values.snmpExporter.service.annotations }}
+  annotations:
+{{ toYaml .Values.snmpExporter.service.annotations | indent 4 }}
+{{- end }}
+  labels:
+    app: {{ template "prometheus.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.snmpExporter.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+{{- if .Values.snmpExporter.service.labels }}
+{{ toYaml .Values.snmpExporter.service.labels | indent 4 }}
+{{- end }}
+  name: {{ template "prometheus.snmpExporter.fullname" . }}
+spec:
+{{- if .Values.snmpExporter.service.clusterIP }}
+  clusterIP: {{ .Values.snmpExporter.service.clusterIP }}
+{{- end }}
+{{- if .Values.snmpExporter.service.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.snmpExporter.service.externalIPs | indent 4 }}
+{{- end }}
+{{- if .Values.snmpExporter.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.snmpExporter.service.loadBalancerIP }}
+{{- end }}
+{{- if .Values.snmpExporter.service.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+  {{- range $cidr := .Values.snmpExporter.service.loadBalancerSourceRanges }}
+    - {{ $cidr }}
+  {{- end }}
+{{- end }}
+  ports:
+    - name: http
+      port: {{ .Values.snmpExporter.service.servicePort }}
+      protocol: TCP
+      targetPort: 9116
+    {{- if .Values.snmpExporter.service.nodePort }}
+      nodePort: {{ .Values.snmpExporter.service.nodePort }}
+    {{- end }}
+  selector:
+    app: {{ template "prometheus.name" . }}
+    component: "{{ .Values.snmpExporter.name }}"
+    release: {{ .Release.Name }}
+  type: "{{ .Values.snmpExporter.service.type }}"
+{{- end }}

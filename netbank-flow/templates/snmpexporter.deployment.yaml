@@ -1,0 +1,53 @@
+{{- if .Values.snmpExporter.enabled -}}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ template "prometheus.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.snmpExporter.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "prometheus.snmpExporter.fullname" . }}
+spec:
+  replicas: {{ .Values.snmpExporter.replicaCount }}
+  {{- if .Values.server.strategy }}
+  strategy:
+{{ toYaml .Values.server.strategy | indent 4 }}
+  {{- end }}
+  template:
+    metadata:
+    {{- if .Values.snmpExporter.podAnnotations }}
+      annotations:
+{{ toYaml .Values.snmpExporter.podAnnotations | indent 8 }}
+    {{- end }}
+      labels:
+        app: {{ template "prometheus.name" . }}
+        component: "{{ .Values.snmpExporter.name }}"
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ template "prometheus.name" . }}-{{ .Values.snmpExporter.name }}
+          image: "{{ .Values.snmpExporter.image.repository }}:{{ .Values.snmpExporter.image.tag }}"
+          imagePullPolicy: "{{ .Values.snmpExporter.image.pullPolicy }}"
+          ports:
+            - containerPort: 9116
+          resources:
+{{ toYaml .Values.snmpExporter.resources | indent 12 }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/snmp_exporter
+              readOnly: true
+    {{- if .Values.snmpExporter.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.snmpExporter.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.snmpExporter.affinity }}
+      affinity:
+{{ toYaml .Values.snmpExporter.affinity | indent 8 }}
+    {{- end }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ if .Values.snmpExporter.configMapOverrideName }}{{ .Release.Name }}-{{ .Values.snmpExporter.configMapOverrideName }}{{- else }}{{ template "prometheus.snmpExporter.fullname" . }}{{- end }}
+{{- end }}

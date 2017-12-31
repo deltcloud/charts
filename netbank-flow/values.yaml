@@ -357,7 +357,7 @@ snmpExporter:
   name: snmpexporter
   enabled: true
   configFiles:
-    snmp.yml:
+    snmp.yml: |-
       in_out:
         walk:
         - 1.3.6.1.2.1.31.1.1.1.10

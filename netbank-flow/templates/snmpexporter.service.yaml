@@ -15,7 +15,7 @@ metadata:
 {{- if .Values.snmpExporter.service.labels }}
 {{ toYaml .Values.snmpExporter.service.labels | indent 4 }}
 {{- end }}
-  name: {{ template "prometheus.snmpExporter.fullname" . }}
+  name: {{ template "prometheus.snmpexporter.fullname" . }}
 spec:
 {{- if .Values.snmpExporter.service.clusterIP }}
   clusterIP: {{ .Values.snmpExporter.service.clusterIP }}

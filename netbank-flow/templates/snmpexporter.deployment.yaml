@@ -8,7 +8,7 @@ metadata:
     component: "{{ .Values.snmpExporter.name }}"
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-  name: {{ template "prometheus.snmpExporter.fullname" . }}
+  name: {{ template "prometheus.snmpexporter.fullname" . }}
 spec:
   replicas: {{ .Values.snmpExporter.replicaCount }}
   {{- if .Values.server.strategy }}
@@ -49,5 +49,5 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: {{ if .Values.snmpExporter.configMapOverrideName }}{{ .Release.Name }}-{{ .Values.snmpExporter.configMapOverrideName }}{{- else }}{{ template "prometheus.snmpExporter.fullname" . }}{{- end }}
+            name: {{ if .Values.snmpExporter.configMapOverrideName }}{{ .Release.Name }}-{{ .Values.snmpExporter.configMapOverrideName }}{{- else }}{{ template "prometheus.snmpexporter.fullname" . }}{{- end }}
 {{- end }}

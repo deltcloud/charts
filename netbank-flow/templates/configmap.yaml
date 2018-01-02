@@ -9,18 +9,10 @@ metadata:
     release: {{ .Release.Name }}
   name: {{ template "prometheus.fullname" . }}
 data:
+  {{- if and .Values.alertmanager.enabled .Values.alertmanager.rules -}}
   alertmanager.rules.yaml: |+
-    groups:
-    - name: targets.rules
-      rules:
-      - alert: InstanceDown
-        expr: up == 0
-        for: 3m
-        labels:
-          severity: warning
-        annotations:
-          summary: `Instance {{ $labels.instance }} down`
-          description: `{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 3 minutes.`
+    {{ toYaml  .values.alertmanager.rules | indent 4 }} 
+  {{- end -}}
 
   prometheus.yml: |+
     global:

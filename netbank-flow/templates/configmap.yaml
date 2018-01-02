@@ -22,8 +22,8 @@ data:
     rule_files:
       - /etc/config/alertmanager.rules.yaml
 
-{{- if .Values.myjobs -}}
     scrape_configs:    
+{{- if .Values.myjobs -}}
 {{ toYaml .Values.myjobs | indent 6 }}
 {{- end -}}
 

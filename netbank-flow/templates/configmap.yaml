@@ -20,9 +20,10 @@ data:
           - targets: ["{{ template "prometheus.alertmanager.fullname" . }}"]
     rule_files:
       - /etc/config/alertmanager.rules.yaml
-    {{- if .Values.scrape_configs -}}
-      {{ toYaml  .Values.scrape_configs | indent 4 }}
-    {{- end -}}
+    scrape_configs:
+      {{- if .Values.jobs -}}
+        {{ toYaml  .Values.jobs | indent 6 }}
+      {{- end -}}
     {{- if .Values.remote_storage.enabled }}
     remote_write:
       - url: "http://{{ template "prometheus.influxdb.fullname" . }}:8086/api/v1/prom/write?u={{ .Values.influxdb.setDefaultUser.user.username }}&p={{ .Values.influxdb.setDefaultUser.user.password }}&db={{ .Values.influxdb.dbName }}"

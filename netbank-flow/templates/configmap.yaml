@@ -9,10 +9,10 @@ metadata:
     release: {{ .Release.Name }}
   name: {{ template "prometheus.fullname" . }}
 data:
-  alertmanager.rules.yaml: |+
+  alertmanager.rules.yaml: |-
 {{ toYaml  .Values.alertmanager.rules | indent 4 }} 
 
-  prometheus.yml: |+
+  prometheus.yml: |-
     global:
       scrape_timeout: 50s
     alerting:

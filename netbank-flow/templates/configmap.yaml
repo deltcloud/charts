@@ -12,7 +12,7 @@ data:
   #alertmanager.rules.yaml: |
     #{{ toYaml  .Values.rules | indent 4 }}
 
-  prometheus.yml:
+  prometheus.yml: |-
     global:
       scrape_timeout: 50s
     alerting:
@@ -22,10 +22,11 @@ data:
     rule_files:
       - /etc/config/alertmanager.rules.yaml
 
-{{- if .Values.jobs -}}
     scrape_configs:
-  {{ toYaml  .Values.jobs | indent 6 }}
+{{- if .Values.jobs -}}
+{{ toYaml  .Values.jobs | indent 6 }}
 {{- end -}}
+
     {{- if .Values.remote_storage.enabled }}
     remote_write:
       - url: "http://{{ template "prometheus.influxdb.fullname" . }}:8086/api/v1/prom/write?u={{ .Values.influxdb.setDefaultUser.user.username }}&p={{ .Values.influxdb.setDefaultUser.user.password }}&db={{ .Values.influxdb.dbName }}"

@@ -10,8 +10,8 @@ metadata:
   name: {{ template "prometheus.fullname" . }}
 data:
   {{- if and .Values.alertmanager.enabled .Values.alertmanager.rules -}}
-  alertmanager.rules.yaml:
-    {{ toYaml  .values.alertmanager.rules | indent 4 }} 
+  alertmanager.rules.yaml: |
+    {{ toYaml  .Values.alertmanager.rules | indent 4 }} 
   {{- end -}}
 
   prometheus.yml: |+

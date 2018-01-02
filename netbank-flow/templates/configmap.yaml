@@ -9,7 +9,7 @@ metadata:
     release: {{ .Release.Name }}
   name: {{ template "prometheus.fullname" . }}
 data:
-  alertmanager.rules.yaml: |-
+  alertmanager.rules.yaml: |
     {{ toYaml  .Values.rules | indent 4 }}
 
   prometheus.yml: |-

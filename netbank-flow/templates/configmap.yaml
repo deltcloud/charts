@@ -9,7 +9,7 @@ metadata:
     release: {{ .Release.Name }}
   name: {{ template "prometheus.fullname" . }}
 data:
-  alertmanager.rules.yaml: |-
+  alertmanager.rules.yaml: |+
 {{ toYaml  .Values.alertmanager.rules | indent 4 }} 
 
   prometheus.yml: |+
@@ -22,10 +22,6 @@ data:
     rule_files:
       - /etc/config/alertmanager.rules.yaml
     scrape_configs:
-      - job_name: prometheus
-        static_configs:
-          - targets:
-            - localhost:9090
       {{- if .Values.jobs -}}
         {{ toYaml  .Values.jobs | indent 6 }}
       {{- end -}}

@@ -18,11 +18,9 @@ data:
       alertmanagers:
         - static_configs:
           - targets: ["{{ template "prometheus.alertmanager.fullname" . }}"]
-{{- if true -}}
     rule_files:
       - /etc/config/alertmanager.rules.yaml
-{{- end -}}
-{{- if .Values.myjobs -}}
+{{- if .Values.myjobs }}
 {{ toYaml .Values.myjobs | indent 6 }}
 {{- end -}}
 

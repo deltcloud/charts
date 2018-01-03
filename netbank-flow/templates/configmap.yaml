@@ -13,7 +13,7 @@ data:
   {{- if .Values.alertmanager.rules }}
 {{ toYaml  .Values.alertmanager.rules | indent 4 }}
   {{- end -}}
-  prometheus.yml: |+
+  prometheus.yml:
     global:
       scrape_timeout: 50s
     alerting:

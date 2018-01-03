@@ -9,23 +9,22 @@ metadata:
     release: {{ .Release.Name }}
   name: {{ template "prometheus.fullname" . }}
 data:
-  #alertmanager.rules.yaml: |
-    #{{ toYaml  .Values.rules | indent 4 }}
-
-  prometheus.yml: |
+#alertmanager.rules.yaml: |
+#{{ toYaml  .Values.rules | indent 4 }}
+  prometheus.yml: |+
+    global:
+      scrape_timeout: 50s
     alerting:
       alertmanagers:
         - static_configs:
           - targets: ["{{ template "prometheus.alertmanager.fullname" . }}"]
     rule_files:
       - /etc/config/alertmanager.rules.yaml
-    global:
-      scrape_timeout: 50s
-
-  {{- if .Values.myjobs -}}
+      
+{{- if .Values.myjobs -}}
     scrape_configs:
-  {{ toYaml .Values.myjobs.scrape_configs | indent 6 }}
-  {{- end -}}
+{{ toYaml .Values.myjobs.scrape_configs | indent 6 }}
+{{- end -}}
 
     {{- if .Values.remote_storage.enabled }}
     remote_write:

@@ -22,7 +22,7 @@ data:
       - /etc/config/alertmanager.rules.yaml
     scrape_configs:
     {{- if .Values.myjobs }}
-    {{ toYaml .Values.myjobs | indent 6 }}
+{{ toYaml .Values.myjobs | indent 6 }}
     {{- end -}}
     {{- if .Values.remote_storage.enabled }}
     remote_write:

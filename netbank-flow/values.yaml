@@ -5,7 +5,7 @@ lifecycle:
   enabled: false
 
 alertmanager:
-  rules: []
+  rules: {}
   enabled: true
   name: alertmanager
   image:

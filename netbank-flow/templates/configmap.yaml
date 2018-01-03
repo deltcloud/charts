@@ -13,19 +13,19 @@ data:
     #{{ toYaml  .Values.rules | indent 4 }}
 
   prometheus.yml: |
-    global:
-      scrape_timeout: 50s
     alerting:
       alertmanagers:
         - static_configs:
           - targets: ["{{ template "prometheus.alertmanager.fullname" . }}"]
     rule_files:
-      - /etc/config/alertmanager.rules.yaml\n
+      - /etc/config/alertmanager.rules.yaml
+    global:
+      scrape_timeout: 50s
 
-    scrape_configs: |
-    {{- if .Values.myjobs -}}
-      {{ toYaml .Values.myjobs.scrape_configs | indent 6 }}
-    {{- end -}}
+  {{- if .Values.myjobs -}}
+    scrape_configs:
+  {{ toYaml .Values.myjobs.scrape_configs | indent 6 }}
+  {{- end -}}
 
     {{- if .Values.remote_storage.enabled }}
     remote_write:

@@ -21,7 +21,7 @@ data:
     rule_files:
       - /etc/config/alertmanager.rules.yaml
 {{- if .Values.myjobs }}
-{{ toYaml .Values.myjobs | indent 6 }}
+{{ toYaml .Values.myjobs | indent 8 }}
 {{- end -}}
 
     {{- if .Values.remote_storage.enabled }}

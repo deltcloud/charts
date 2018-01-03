@@ -21,9 +21,10 @@ data:
           - targets: ["{{ template "prometheus.alertmanager.fullname" . }}"]
     rule_files:
       - /etc/config/alertmanager.rules.yaml
+
   {{- if .Values.myjobs -}}
     scrape_configs:
-{{ toYaml .Values.myjobs.scrape_configs | indent 6 }}
+  {{ toYaml .Values.myjobs.scrape_configs | indent 4 }}
   {{- end -}}
 
     {{- if .Values.remote_storage.enabled }}

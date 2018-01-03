@@ -6,7 +6,7 @@ lifecycle:
 
 alertmanager:
   conf:
-    global:
+    global: {}
       # slack_api_url: ''
 
     receivers:

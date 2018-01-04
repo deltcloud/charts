@@ -9,11 +9,6 @@ metadata:
     release: {{ .Release.Name }}
   name: {{ template "prometheus.fullname" . }}
 data:
-  alertmanager.rules.yaml: |
-  {{- if .Values.alertmanager.rules }}
-{{ toYaml  .Values.alertmanager.rules | indent 4 }}
-  {{- end }}
-
   prometheus.yml: |
     global:
       scrape_timeout: 50s
@@ -32,4 +27,11 @@ data:
       - url: "http://{{ template "prometheus.influxdb.fullname" . }}:8086/api/v1/prom/write?u={{ .Values.influxdb.setDefaultUser.user.username }}&p={{ .Values.influxdb.setDefaultUser.user.password }}&db={{ .Values.influxdb.dbName }}"
     remote_read:
       - url: "http://{{ template "prometheus.influxdb.fullname" . }}:8086/api/v1/prom/read?u={{ .Values.influxdb.setDefaultUser.user.username }}&p={{ .Values.influxdb.setDefaultUser.user.password }}&db={{ .Values.influxdb.dbName }}"
-    {{- end -}}
+    {{- end }}
+
+
+  alertmanager.rules.yaml: |
+  {{- if .Values.alertmanager.rules }}
+{{ toYaml  .Values.alertmanager.rules | indent 4 }}
+  {{- end }}
+

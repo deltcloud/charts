@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "netbank-customer.fullname" . }}
+  labels:
+    app: {{ template "netbank-customer.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+
+data: 
+  config: |-
+    appname = usersvr
+    httpport = 8080
+    runmode = dev
+    autorender = false
+    copyrequestbody = true
+    EnableDocs = true
+
+    dbhost={{ template "netbank-customer.mariadb.fullname" . }}
+    dbschema={{ .Values.mariadb.mariadbDatabase }}
+    dbuser={{ .Values.mariadb.mariadbUser }}
+    dbpassword={{ .Values.mariadb.mariadbPassword }}
+    dbport=3306
+    copyrequestbody=true
+
+
+    publicKeyPath=key.pub
+
+    smsAccessKeyId={{ .Values.sms.smsAccessKeyId }}
+    smsSecret={{ .Values.sms.smsSecret }}
+    smsRegisterTemplate= {{ .Values.sms.smsRegisterTemplate }}
+    smsResetPwdTemplate= {{ .Values.sms.smsResetPwdTemplate }}
+
+    captchaHost=http://localhost/verify
+

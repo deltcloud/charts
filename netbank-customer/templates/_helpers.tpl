@@ -18,6 +18,6 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 
 {{- define "netbank-customer.mariadb.fullname" -}}
 {{- $name := default "mariadb" .Values.mariadb.nameOverride -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 24 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 32 | trimSuffix "-" -}}
 {{- end -}}
 

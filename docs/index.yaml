@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   dex:
   - apiVersion: v1
-    created: 2018-01-11T14:10:56.715953018+08:00
+    created: 2018-01-11T15:04:47.869945347+08:00
     description: dex
     digest: 74d5a3b44d9aeb81f309255ffd4a3911349e47d7def5aa9ddc07f30dd94fe877
     home: https://www.netbank.cn
@@ -16,7 +16,7 @@ entries:
     - https://deltcloud.github.io/charts/dex-0.0.1.tgz
     version: 0.0.1
   elasticsearch:
-  - created: 2018-01-11T14:10:56.717873102+08:00
+  - created: 2018-01-11T15:04:47.871443213+08:00
     description: Flexible and powerful open source, distributed real-time search and
       analytics engine.
     digest: 6975e3f029969d21b460f3587d754b121880d667d3c35056797b1d4c364b4950
@@ -38,7 +38,7 @@ entries:
     version: 0.4.3
   fluent-bit:
   - appVersion: 0.12.7
-    created: 2018-01-11T14:10:56.718747436+08:00
+    created: 2018-01-11T15:04:47.872278472+08:00
     description: Fast and Lightweight Log/Data Forwarder for Linux, BSD and OSX
     digest: a040f7aa06d0a0e0188b27b958b6d4b91b677c97a2689716bcf26a79750acf71
     home: http://fluentbit.io
@@ -61,7 +61,7 @@ entries:
     version: 0.2.3
   gitlab:
   - apiVersion: v1
-    created: 2018-01-11T14:10:56.722627873+08:00
+    created: 2018-01-11T15:04:47.875950089+08:00
     description: GitLab Omnibus all-in-one bundle
     digest: 0451cc60a6bbc4b633c33ae160c5950e1cc87cb7875afd1202c92d85bf75a011
     home: https://about.gitlab.com
@@ -91,7 +91,7 @@ entries:
     version: 0.1.36
   gitlab-omnibus:
   - apiVersion: v1
-    created: 2018-01-11T14:10:56.724974933+08:00
+    created: 2018-01-11T15:04:47.878143027+08:00
     description: GitLab Omnibus all-in-one bundle
     digest: 1e760e6f83e6aa6662c180aa4fff74685293d4dedf5ab344a9dbc4879da4351c
     home: https://about.gitlab.com
@@ -120,7 +120,7 @@ entries:
     - https://deltcloud.github.io/charts/gitlab-omnibus-0.1.36.tgz
     version: 0.1.36
   grafana:
-  - created: 2018-01-11T14:10:56.726696271+08:00
+  - created: 2018-01-11T15:04:47.879514805+08:00
     description: The leading tool for querying and visualizing time series and metrics.
     digest: bc7bd5892e291ab30266b2c23aaed3dc99d102172c7c80d7766e30c257ec176a
     engine: gotpl
@@ -137,7 +137,7 @@ entries:
     version: 0.5.3
   harbor:
   - apiVersion: v1
-    created: 2018-01-11T14:10:56.72841228+08:00
+    created: 2018-01-11T15:04:47.881128377+08:00
     description: A Helm chart for Kubernetes
     digest: b646f6277687e5e5904293189a6e8b448bc118ae8e71ae0b49f3ec92acf242c4
     name: harbor
@@ -146,7 +146,7 @@ entries:
     version: 0.1.0
   heapster:
   - apiVersion: v1
-    created: 2018-01-11T14:10:56.729420499+08:00
+    created: 2018-01-11T15:04:47.882173702+08:00
     description: Heapster enables Container Cluster Monitoring and Performance Analysis.
     digest: 8f93b643380cdb32e74c2200695a6a74633908dbc01e901273ce641588692607
     engine: gotpl
@@ -165,7 +165,7 @@ entries:
     - https://deltcloud.github.io/charts/heapster-0.2.3.tgz
     version: 0.2.3
   influxdb:
-  - created: 2018-01-11T14:10:56.731828498+08:00
+  - created: 2018-01-11T15:04:47.883372331+08:00
     description: Scalable datastore for metrics, events, and real-time analytics.
     digest: f0ccb1666dcc379c486ad74da4e1439b5f0d579380f6d5539a3f0c0df0944469
     engine: gotpl
@@ -185,7 +185,7 @@ entries:
     version: 0.7.0
   kibana:
   - appVersion: 6.0.0
-    created: 2018-01-11T14:10:56.733626595+08:00
+    created: 2018-01-11T15:04:47.88421038+08:00
     description: Kibana is an open source data visualization plugin for Elasticsearch
     digest: ceeb5f1fc4db67912350ca17806f51766748b7641b97e672d083407a9f8c7f7e
     engine: gotpl
@@ -204,7 +204,7 @@ entries:
     version: 0.2.0
   kubernetes-dashboard:
   - appVersion: 1.7.1
-    created: 2018-01-11T14:10:56.734472571+08:00
+    created: 2018-01-11T15:04:47.885096131+08:00
     description: General-purpose web UI for Kubernetes clusters
     digest: 1d36ff8c0f2a6896464e336623935c057e3cae1af1ea1a6101d7a162e43fc7b7
     keywords:
@@ -219,15 +219,15 @@ entries:
     version: 0.4.2
   netbank-customer:
   - apiVersion: v1
-    created: 2018-01-11T14:10:56.73615728+08:00
+    created: 2018-01-11T15:04:47.886890127+08:00
     description: A Helm chart for Kubernetes
-    digest: b0c998e979ebfdf98f26a24293ec7b9e296d565f534e44c8dbbb89f4e79d2d7c
+    digest: 391b87bc67d22f66ba30d716d276efee39cfc7ae4802d739ba359be35aee83c5
     name: netbank-customer
     urls:
     - https://deltcloud.github.io/charts/netbank-customer-0.1.0.tgz
     version: 0.1.0
   netbank-flow:
-  - created: 2018-01-11T14:10:56.738525339+08:00
+  - created: 2018-01-11T15:04:47.890520253+08:00
     description: netbank flow system
     digest: e6c2413748934fe59dce6dc3720b40803728afcf64c0040a61af98f93a025d10
     engine: gotpl
@@ -242,7 +242,7 @@ entries:
     - https://deltcloud.github.io/charts/netbank-flow-0.0.1.tgz
     version: 0.0.1
   postgresql:
-  - created: 2018-01-11T14:10:56.739736854+08:00
+  - created: 2018-01-11T15:04:47.892140255+08:00
     description: Object-relational database management system (ORDBMS) with an emphasis
       on extensibility and on standards-compliance.
     digest: e6cfed0cc8d45a586d250df240f5d15e69097391c862c921c886112ca716c16d
@@ -265,7 +265,7 @@ entries:
     - https://deltcloud.github.io/charts/postgresql-0.8.5.tgz
     version: 0.8.5
   prometheus:
-  - created: 2018-01-11T14:10:56.742083471+08:00
+  - created: 2018-01-11T15:04:47.894444365+08:00
     description: Prometheus is a monitoring system and time series database.
     digest: 263223fa17137c9c0e0b7f854fdee88745fee4f3d55c0d3e9798940b3e0d173e
     engine: gotpl
@@ -285,11 +285,11 @@ entries:
     version: 4.6.14
   snmp-exporter:
   - apiVersion: v1
-    created: 2018-01-11T14:10:56.742614731+08:00
+    created: 2018-01-11T15:04:47.894969733+08:00
     description: A Helm chart for Kubernetes
     digest: 7dd3a139e593d0689dd9780d26dfb264416045765c5f99fd5a24d7761b4684d3
     name: snmp-exporter
     urls:
     - https://deltcloud.github.io/charts/snmp-exporter-0.1.0.tgz
     version: 0.1.0
-generated: 2018-01-11T14:10:56.713424055+08:00
+generated: 2018-01-11T15:04:47.867998243+08:00

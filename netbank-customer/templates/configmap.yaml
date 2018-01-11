@@ -11,7 +11,7 @@ metadata:
 data: 
   config: |-
     appname = usersvr
-    httpport = 8080
+    httpport = {{ .Values.service.internalPort }}
     runmode = dev
     autorender = false
     copyrequestbody = true

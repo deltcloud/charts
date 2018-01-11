@@ -32,9 +32,11 @@ data:
       tlsKey: ./bin/key/server.key
       tlsClientCA: ./bin/key/ca.crt
     connectors:
-    - type: grpc
-      id: grpc
-      name: grpc
+    - type: restful
+      id: restful
+      name: restful
       config:
-        endpoint: 127.0.0.1:50051
+        OpenIdEndpoint: "{{ .Values.customer_service }}/v1/customers/auth/wx"
+        staffPhoneEndpoint: "{{ .Values.customer_service }}/v1/customers/auth/customer-staff"
+
     enablePasswordDB: false

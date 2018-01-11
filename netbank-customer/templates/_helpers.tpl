@@ -21,3 +21,8 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Release.Name $name | trunc 32 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "netbank-customer.captcha.fullname" -}}
+{{- $name := default "captcha" .Values.captcha.nameOverride -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 32 | trimSuffix "-" -}}
+{{- end -}}
+

@@ -29,6 +29,7 @@ data:
 
     smsAccessKeyId={{ .Values.sms.smsAccessKeyId }}
     smsSecret={{ .Values.sms.smsSecret }}
+    smsSignature={{ .Values.sms.smsSignature}}
     smsRegisterTemplate= {{ .Values.sms.smsRegisterTemplate }}
     smsResetPwdTemplate= {{ .Values.sms.smsResetPwdTemplate }}
 

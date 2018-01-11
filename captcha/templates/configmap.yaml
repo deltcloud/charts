@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "captcha.fullname" . }}
+  labels:
+    app: {{ template "captcha.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+
+data: 
+  config: |-
+    [captcha]
+    word_dict=./cn_phrases
+    life_time=5m
+    change_text_on_refresh=true
+
+    [service]
+    port=80
+    logfile=logs/gocaptcha-server.log
+
+    [store]
+    engine=redis
+    @servers={{ template "captcha.redis.fullname" . }}:6379
+    gc_probability=1
+    gc_divisor=100
+
+    [image]
+    width=120
+    height=40
+    font_size=24
+    @font_files=./test.otf
+
+    [filter]
+    @open_filter=ImageFilterNoiseLine
+    @open_filter=ImageFilterNoisePoint
+    @open_filter=ImageFilterStrike
+
+    [ImageFilterNoiseLine]
+    Num=10
+    [ImageFilterNoisePoint]
+    Num=10

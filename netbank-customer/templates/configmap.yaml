@@ -32,5 +32,5 @@ data:
     smsRegisterTemplate= {{ .Values.sms.smsRegisterTemplate }}
     smsResetPwdTemplate= {{ .Values.sms.smsResetPwdTemplate }}
 
-    captchaHost=http://{{ template "netbank-customer.captcha.fullname" . }}/verify
+    captchaHost=http://{{ .Values.captchaHost }}/verify
 

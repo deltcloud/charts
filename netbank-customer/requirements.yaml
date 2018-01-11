@@ -2,6 +2,3 @@ dependencies:
 - name: mariadb
   version: 2.1.3
   repository: https://deltcloud.github.io/charts
-- name: captcha
-  version: 0.1.0
-  repository: https://deltcloud.github.io/charts 

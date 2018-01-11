@@ -49,3 +49,5 @@ sms:
   smsSecret: smsSecret
   smsRegisterTemplate: smsRegisterTemplate
   smsResetPwdTemplate: smsResetPwdTemplate
+
+captchaHost: captcha-0-captcha

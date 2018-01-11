@@ -1,0 +1,6 @@
+dependencies:
+- name: redis
+  repository: https://deltcloud.github.io/charts
+  version: 1.1.7
+digest: sha256:21c666934a2a6c2b89330344d8bb609ea38dd8f5b886a63981331399d6f6f19a
+generated: 2018-01-11T20:30:49.705685449+08:00

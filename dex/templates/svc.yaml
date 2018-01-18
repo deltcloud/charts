@@ -13,7 +13,7 @@ spec:
   ports:
     - name: token
       port: 5556
-      targetPort: token
+      targetPort: 5556
     - name: client
       port: 5557
-      targetPort: client
+      targetPort: 5557

@@ -1,32 +1,32 @@
-{{- if .Values.apiserver.ingress.enabled -}}
+{{- if .Values.ui.ingress.enabled -}}
 {{- $serviceName := include "netbank-oa.fullname" . -}}
-{{- $servicePort := .Values.apiserver.service.externalPort -}}
+{{- $servicePort := .Values.ui.service.externalPort -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "netbank-oa.fullname" . }}
+  name: {{ template "netbank-oa.fullname" . }}-ui
   labels:
-    app: {{ template "netbank-oa.name" . }}
+    app: {{ template "netbank-oa.name" . }}-ui
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
   annotations:
-    {{- range $key, $value := .Values.apiserver.ingress.annotations }}
+    {{- range $key, $value := .Values.ui.ingress.annotations }}
       {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
   rules:
-    {{- range $host := .Values.apiserver.ingress.hosts }}
+    {{- range $host := .Values.ui.ingress.hosts }}
     - host: {{ $host }}
       http:
         paths:
           - path: /
             backend:
-              serviceName: {{ $serviceName }}
+              serviceName: {{ $serviceName }}-ui
               servicePort: {{ $servicePort }}
     {{- end -}}
-  {{- if .Values.apiserver.ingress.tls }}
+  {{- if .Values.ui.ingress.tls }}
   tls:
-{{ toYaml .Values.apiserver.ingress.tls | indent 4 }}
+{{ toYaml .Values.ui.ingress.tls | indent 4 }}
   {{- end -}}
 {{- end -}}

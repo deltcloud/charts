@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "netbank-grafana.fullname" . }}
+  labels:
+    app: {{ template "netbank-grafana.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+
+data: 
+  config: |+
+    {                                                                                                                                   
+     "customer_url" : "http://netbank-customer.2.netbank.linkcloud.cn/v1/customers?Size=10000",                                         
+     "port_url" : "http://netbank-oa-netbank-oa/switchPort/all"                                                                            
+    }

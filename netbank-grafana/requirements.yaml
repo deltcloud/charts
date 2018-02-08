@@ -1,0 +1,4 @@
+dependencies:
+- name: grafana
+  version: 0.5.3
+  repository: https://deltcloud.github.io/charts

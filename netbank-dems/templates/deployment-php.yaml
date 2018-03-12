@@ -1,0 +1,105 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "netbank-dems.fullname" . }}-php
+  labels:
+    app: {{ template "netbank-dems.name" . }}-php
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.php.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "netbank-dems.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-php1
+          image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag }}"
+          imagePullPolicy: {{ .Values.php.image.pullPolicy }}
+          command: ["php"]
+          args: ["/socket/getsocket.php" "xiasha" "3" "9371" "172.31.13.11"]
+          env:
+          - name: MONGODB_IP
+            value: {{ template "netbank-dems.fullname" . }}-mongodb
+          - name: MONGODB_PORT
+            value: {{ .Values.mongodb.service.externalPort }}
+          resources:
+{{ toYaml .Values.php.resources | indent 12 }}
+        - name: {{ .Chart.Name }}-php3
+          image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag }}"
+          imagePullPolicy: {{ .Values.php.image.pullPolicy }}
+          command: ["php"]
+          args: ["/socket/getsocket.php" "xiasha" "3" "9371" "172.31.13.150"]
+          env:
+          - name: MONGODB_IP
+            value: {{ template "netbank-dems.fullname" . }}-mongodb
+          - name: MONGODB_PORT
+            value: {{ .Values.mongodb.service.externalPort }}
+          resources:
+{{ toYaml .Values.php.resources | indent 12 }}
+        - name: {{ .Chart.Name }}-php4
+          image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag }}"
+          imagePullPolicy: {{ .Values.php.image.pullPolicy }}
+          command: ["php"]
+          args: ["/socket/getsocket.php" "xiasha" "3" "9371" "172.31.13.200"]
+          env:
+          - name: MONGODB_IP
+            value: {{ template "netbank-dems.fullname" . }}-mongodb
+          - name: MONGODB_PORT
+            value: {{ .Values.mongodb.service.externalPort }}
+          resources:
+{{ toYaml .Values.php.resources | indent 12 }}
+        - name: {{ .Chart.Name }}-php5
+          image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag }}"
+          imagePullPolicy: {{ .Values.php.image.pullPolicy }}
+          command: ["php"]
+          args: ["/socket/getsocket.php" "xiasha" "3" "9371" "172.31.13.220"]
+          env:
+          - name: MONGODB_IP
+            value: {{ template "netbank-dems.fullname" . }}-mongodb
+          - name: MONGODB_PORT
+            value: {{ .Values.mongodb.service.externalPort }}
+          resources:
+{{ toYaml .Values.php.resources | indent 12 }}
+        - name: {{ .Chart.Name }}-php6
+          image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag }}"
+          imagePullPolicy: {{ .Values.php.image.pullPolicy }}
+          command: ["php"]
+          args: ["/socket/getsocket.php" "xiasha" "3" "9371" "172.31.13.240"]
+          env:
+          - name: MONGODB_IP
+            value: {{ template "netbank-dems.fullname" . }}-mongodb
+          - name: MONGODB_PORT
+            value: {{ .Values.mongodb.service.externalPort }}
+          resources:
+{{ toYaml .Values.php.resources | indent 12 }}
+        - name: {{ .Chart.Name }}-php
+          image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag }}"
+          imagePullPolicy: {{ .Values.php.image.pullPolicy }}
+          command: ["/usr/local/sbin/php-fpm"]
+          env:
+          - name: MONGODB_IP
+            value: {{ template "netbank-dems.fullname" . }}-mongodb
+          - name: MONGODB_PORT
+            value: {{ .Values.mongodb.service.externalPort }}
+          - name: GET_CABINET_DETAIL_URL
+            value: {{ template "netbank-dems.fullname" . }}-cmdb
+          ports:
+            - containerPort: {{ .Values.php.service.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.php.service.internalPort }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.php.service.internalPort }}
+          resources:
+{{ toYaml .Values.php.resources | indent 12 }}
+    {{- if .Values.php.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.php.nodeSelector | indent 8 }}
+    {{- end }}

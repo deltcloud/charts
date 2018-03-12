@@ -1,0 +1,19 @@
+{{- if and .Values.mongodb.persistence.enabled (not .Values.mongodb.persistence.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "netbank-dems.fullname" . }}-mongodb
+spec:
+  accessModes:
+    - {{ .Values.mongodb.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.mongodb.persistence.size | quote }}
+{{- if .Values.mongodb.persistence.storageClass }}
+{{- if (eq "-" .Values.mongodb.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.mongodb.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,55 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "netbank-dems.fullname" . }}-mongodb
+  labels:
+    app: {{ template "netbank-dems.name" . }}-mongodb
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ template "netbank-dems.name" . }}-mongodb
+        release: {{ .Release.Name }}
+    spec:
+      {{- if .Values.mongodb.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.mongodb.nodeSelector | indent 8 }}
+      {{- end }}
+      containers:
+      - name: {{ .Chart.Name }}-mongodb
+        image: "{{ .Values.mongodb.image.repository }}:{{ .Values.mongodb.image.tag }}"
+        imagePullPolicy: {{ .Values.mongodb.image.pullPolicy }}
+        ports:
+        - name: mongodb
+          containerPort: 27017
+        livenessProbe:
+          exec:
+            command:
+            - mongo
+            - --eval
+            - "db.adminCommand('ping')"
+{{ toYaml .Values.mongodb.livenessProbe | indent 10 }}
+        readinessProbe:
+          exec:
+            command:
+            - mongo
+            - --eval
+            - "db.adminCommand('ping')"
+{{ toYaml .Values.mongodb.readinessProbe | indent 10 }}
+        volumeMounts:
+        - name: data
+          mountPath: /data/db
+        resources:
+{{ toYaml .Values.mongodb.resources | indent 10 }}
+      volumes:
+      - name: data
+      {{- if .Values.mongodb.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.mongodb.persistence.existingClaim }}{{ .Values.mongodb.persistence.existingClaim }}{{- else }}{{ template "netbank-dems.fullname" . }}-mongodb {{- end }}
+
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}

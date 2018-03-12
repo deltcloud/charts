@@ -1,0 +1,4 @@
+dependencies:
+- name: mariadb
+  version: 2.1.3
+  repository: https://deltcloud.github.io/charts

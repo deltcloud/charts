@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "netbank-dems.fullname" . }}-cmdb
+  labels:
+    app: {{ template "netbank-dems.name" . }}-cmdb
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.cmdb.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "netbank-dems.name" . }}-cmdb
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.cmdb.image.repository }}:{{ .Values.cmdb.image.tag }}"
+          imagePullPolicy: {{ .Values.cmdb.image.pullPolicy }}
+          env:
+          - name: MYSQL_HOST 
+            value: {{ template "mariadb.fullname" . }}
+          - name: MYSQL_PORT
+            value: 3306
+          - name: MYSQL_ROOT_PASSWORD
+            value: {{ .Values.mariadb.mariadbRootPassword }}
+          - name: MYSQL_SCHEMA
+            value: {{ .Values.mariadb.mariadbDatabase }}
+          ports:
+            - containerPort: {{ .Values.cmdb.service.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.cmdb.service.internalPort }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.cmdb.service.internalPort }}
+          resources:
+{{ toYaml .Values.cmdb.resources | indent 12 }}
+    {{- if .Values.cmdb.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.cmdb.nodeSelector | indent 8 }}
+    {{- end }}

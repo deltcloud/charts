@@ -1,0 +1,167 @@
+# Default values for netbank-dems.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+ui:
+  replicaCount: 1
+  image:
+    repository: registry.cn-hangzhou.aliyuncs.com/netbankzgg/nginx
+    tag: withfile
+    pullPolicy: IfNotPresent
+  service:
+    name: netbank-dems-ui
+    type: ClusterIP
+    externalPort: 80
+    internalPort: 80
+  ingress:
+    enabled: false
+    # Used to create an Ingress record.
+    hosts:
+      - chart-example.local
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    tls: []
+      # Secrets must be manually created in the namespace.
+      # - secretName: chart-example-tls
+      #   hosts:
+      #     - chart-example.local
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #  cpu: 100m
+    #  memory: 128Mi
+    # requests:
+    #  cpu: 100m
+    #  memory: 128Mi
+  confFiles:
+    default.conf: |-
+      server {
+          listen       80;
+          server_name  localhost;
+      
+          location / {
+              root   /var/www/html;
+              index  index.php index.html index.htm;
+          }
+      
+          error_page   500 502 503 504  /50x.html;
+          location = /50x.html {
+              root   /usr/share/nginx/html;
+          }
+      
+          location ~ \.php$ {
+              root           /var/www/html;
+              fastcgi_pass   phpfpm:9000;
+              fastcgi_index  index.php;
+              fastcgi_param  SCRIPT_FILENAME  /var/www/html/$fastcgi_script_name;
+              include        fastcgi_params;
+          }
+      
+      }
+
+mongodb:
+  image:
+    repository: registry.cn-hangzhou.aliyuncs.com/netbankzgg/mongo
+    tag: withfile
+    pullPolicy: IfNotPresent
+
+  service:
+    name: netbank-dems-mongodb
+    type: ClusterIP
+    externalPort: 27017
+    internalPort: 27017
+
+  persistence:
+    enabled: true
+    # existingClaim:
+
+    storageClass: "-"
+    accessMode: ReadWriteOnce
+    size: 8Gi
+
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+
+  nodeSelector: {}
+
+  livenessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  readinessProbe:
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+
+
+php:
+  replicaCount: 1
+  image:
+    repository: registry.cn-hangzhou.aliyuncs.com/netbankzgg/phpfpm
+    tag: withfile
+    pullPolicy: IfNotPresent
+
+  service:
+    name: netbank-dems-php
+    type: ClusterIP
+    externalPort: 9000
+    internalPort: 9000
+
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+
+  nodeSelector: {}
+
+  livenessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+  readinessProbe:
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+
+
+mariadb:
+  mariadbDatabase: netbank-dems
+  mariadbRootPassword: netbank
+
+
+cmdb:
+  replicaCount: 1
+  image:
+    repository: registry.cn-hangzhou.aliyuncs.com/licheng/cmdb
+    tag: v0.1.0
+    pullPolicy: IfNotPresent
+  service:
+    name: netbank-dems-cmdb
+    type: ClusterIP
+    externalPort: 80
+    internalPort: 8080
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #  cpu: 100m
+    #  memory: 128Mi
+    # requests:
+    #  cpu: 100m
+    #  memory: 128Mi
+  nodeSelector: {}

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "netbank-dems.fullname" . }}-cmdb
+  labels:
+    app: {{ template "netbank-dems.name" . }}-cmdb
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.cmdb.service.type }}
+  ports:
+    - port: {{ .Values.cmdb.service.externalPort }}
+      targetPort: {{ .Values.cmdn.service.internalPort }}
+      protocol: TCP
+      name: {{ .Values.cmdb.service.name }}
+  selector:
+    app: {{ template "netbank-dems.name" . }}-cmdb
+    release: {{ .Release.Name }}

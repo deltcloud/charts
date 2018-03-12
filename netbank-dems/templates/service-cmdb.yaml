@@ -11,7 +11,7 @@ spec:
   type: {{ .Values.cmdb.service.type }}
   ports:
     - port: {{ .Values.cmdb.service.externalPort }}
-      targetPort: {{ .Values.cmdn.service.internalPort }}
+      targetPort: {{ .Values.cmdb.service.internalPort }}
       protocol: TCP
       name: {{ .Values.cmdb.service.name }}
   selector:

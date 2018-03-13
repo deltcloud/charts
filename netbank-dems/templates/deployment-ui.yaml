@@ -21,19 +21,19 @@ spec:
           imagePullPolicy: {{ .Values.ui.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.ui.service.internalPort }}
+    {{- if .Values.ui.livenessProbe  }}
           livenessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.ui.service.internalPort }}
+{{ toYaml .Values.ui.livenessProbe | indent 10 }}
+    {{- end }}
+    {{- if .Values.ui.readinessProbe }}
           readinessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.ui.service.internalPort }}
+{{ toYaml .Values.ui.readinessProbe | indent 10 }}
+    {{- end }}
           resources:
 {{ toYaml .Values.ui.resources | indent 12 }}
           volumeMounts:
             - name: config-volume
-              mountPath: /etc/nginx/conf.d/default.conf
+              mountPath: /etc/nginx/conf.d
     {{- if .Values.ui.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.ui.nodeSelector | indent 8 }}

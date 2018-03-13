@@ -8,4 +8,5 @@ metadata:
     release: {{ .Release.Name }}
   name: {{ template "netbank-dems.fullname" . }}-ui
 data:
-{{ toYaml .Values.ui.confFiles | indent 2 }}
+  default.conf: |-
+{{ .Values.ui.confFiles | indent 4 }}

@@ -21,23 +21,23 @@ spec:
           imagePullPolicy: {{ .Values.cmdb.image.pullPolicy }}
           env:
           - name: MYSQL_HOST 
-            value: {{ template "mariadb.fullname" . }}
+            value: {{ template "netbank-dems.name" . }}-mariadb
           - name: MYSQL_PORT
-            value: 3306
+            value: "3306"
           - name: MYSQL_ROOT_PASSWORD
             value: {{ .Values.mariadb.mariadbRootPassword }}
           - name: MYSQL_SCHEMA
             value: {{ .Values.mariadb.mariadbDatabase }}
           ports:
             - containerPort: {{ .Values.cmdb.service.internalPort }}
+    {{- if .Values.cmdb.livenessProbe  }}
           livenessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.cmdb.service.internalPort }}
+{{ toYaml .Values.cmdb.livenessProbe | indent 10 }}
+    {{- end }}
+    {{- if .Values.cmdb.readinessProbe }}
           readinessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.cmdb.service.internalPort }}
+{{ toYaml .Values.cmdb.readinessProbe | indent 10 }}
+    {{- end }}
           resources:
 {{ toYaml .Values.cmdb.resources | indent 12 }}
     {{- if .Values.cmdb.nodeSelector }}

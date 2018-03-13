@@ -36,31 +36,42 @@ ui:
     # requests:
     #  cpu: 100m
     #  memory: 128Mi
-  confFiles:
-    default.conf: |-
-      server {
-          listen       80;
-          server_name  localhost;
-      
-          location / {
-              root   /var/www/html;
-              index  index.php index.html index.htm;
-          }
-      
-          error_page   500 502 503 504  /50x.html;
-          location = /50x.html {
-              root   /usr/share/nginx/html;
-          }
-      
-          location ~ \.php$ {
-              root           /var/www/html;
-              fastcgi_pass   phpfpm:9000;
-              fastcgi_index  index.php;
-              fastcgi_param  SCRIPT_FILENAME  /var/www/html/$fastcgi_script_name;
-              include        fastcgi_params;
-          }
-      
-      }
+ # livenessProbe:
+ #   initialDelaySeconds: 30
+ #   periodSeconds: 10
+ #   timeoutSeconds: 5
+ #   failureThreshold: 6
+ #   successThreshold: 1
+ # readinessProbe:
+ #   initialDelaySeconds: 5
+ #   periodSeconds: 10
+ #   timeoutSeconds: 5
+ #   failureThreshold: 6
+ #   successThreshold: 1
+  confFiles: |-
+    server {
+        listen       80;
+        server_name  localhost;
+    
+        location / {
+            root   /var/www/html;
+            index  index.php index.html index.htm;
+        }
+    
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    
+        location ~ \.php$ {
+            root           /var/www/html;
+            fastcgi_pass   phpfpm:9000;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  /var/www/html/$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+    
+    }
 
 mongodb:
   image:
@@ -123,23 +134,30 @@ php:
 
   nodeSelector: {}
 
-  livenessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
-    successThreshold: 1
-  readinessProbe:
-    initialDelaySeconds: 5
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 6
-    successThreshold: 1
+ # livenessProbe:
+ #   initialDelaySeconds: 30
+ #   periodSeconds: 10
+ #   timeoutSeconds: 5
+ #   failureThreshold: 6
+ #   successThreshold: 1
+ # readinessProbe:
+ #   initialDelaySeconds: 5
+ #   periodSeconds: 10
+ #   timeoutSeconds: 5
+ #   failureThreshold: 6
+ #   successThreshold: 1
 
 
 mariadb:
   mariadbDatabase: netbank-dems
   mariadbRootPassword: netbank
+  persistence:
+    enabled: true
+    # existingClaim:
+
+    storageClass: "-"
+    accessMode: ReadWriteOnce
+    size: 8Gi
 
 
 cmdb:
@@ -165,3 +183,15 @@ cmdb:
     #  cpu: 100m
     #  memory: 128Mi
   nodeSelector: {}
+ # livenessProbe:
+ #   initialDelaySeconds: 30
+ #   periodSeconds: 10
+ #   timeoutSeconds: 5
+ #   failureThreshold: 6
+ #   successThreshold: 1
+ # readinessProbe:
+ #   initialDelaySeconds: 5
+ #   periodSeconds: 10
+ #   timeoutSeconds: 5
+ #   failureThreshold: 6
+ #   successThreshold: 1

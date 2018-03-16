@@ -439,8 +439,8 @@ server:
     ## Must be provided if Ingress is enabled
     ##
     hosts: []
-    #   - prometheus.domain.com
-    #   - domain.com/prometheus
+    #  - prometheus.domain.com
+    #  - domain.com/prometheus
 
     ## Prometheus server Ingress TLS configuration
     ## Secrets must be manually created in the namespace

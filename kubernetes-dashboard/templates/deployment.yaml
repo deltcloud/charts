@@ -4,11 +4,14 @@ metadata:
   name: {{ template "kubernetes-dashboard.fullname" . }}
   labels:
     app: {{ template "kubernetes-dashboard.name" . }}
-    heritage: "{{ .Release.Service }}"
+    chart: {{ template "kubernetes-dashboard.chart" . }}
     release: "{{ .Release.Name }}"
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: "{{ .Release.Service }}"
     kubernetes.io/cluster-service: "true"
   namespace: {{ .Release.Namespace }}
+{{- if .Values.labels }}
+{{ toYaml .Values.labels | indent 4 }}
+{{- end }}
 spec:
   replicas: 1
   strategy:
@@ -20,30 +23,36 @@ spec:
     metadata:
       labels:
         app: {{ template "kubernetes-dashboard.name" . }}
-        heritage: "{{ .Release.Service }}"
         release: "{{ .Release.Name }}"
-        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
         kubernetes.io/cluster-service: "true"
     spec:
-      serviceAccountName: {{ if .Values.rbac.create }}{{ template "kubernetes-dashboard.fullname" . }}{{ else }}"{{ .Values.rbac.serviceAccountName }}"{{ end }}
-      nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 10 }}
+      serviceAccountName: {{ template "kubernetes-dashboard.serviceAccountName" . }}
       containers:
-      - name: main
-        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
-        imagePullPolicy: {{ .Values.imagePullPolicy }}
-        resources:
-{{ toYaml .Values.resources | indent 10 }}
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 9090
-            scheme: HTTP
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 30
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        args:
+{{- if .Values.extraArgs }}
+{{ toYaml .Values.extraArgs | indent 10 }}
+{{- end }}
         ports:
         - name: http
           containerPort: 9090
           protocol: TCP
+        livenessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: 9090
+          initialDelaySeconds: 30
+          timeoutSeconds: 30
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+    {{- end }}

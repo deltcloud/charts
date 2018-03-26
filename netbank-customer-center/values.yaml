@@ -1,0 +1,130 @@
+# Default values for netbank-dems.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+nginx:
+  replicaCount: 1
+  image:
+    repository: registry.cn-hangzhou.aliyuncs.com/netbankzgg/nginx
+    tag: customerCenter-k8s
+    pullPolicy: IfNotPresent
+  service:
+    name: netbank-cs-nginx
+    type: ClusterIP
+    externalPort: 80
+    internalPort: 80
+  ingress:
+    enabled: false
+    # Used to create an Ingress record.
+    hosts:
+      - chart-example.local
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    tls: []
+      # Secrets must be manually created in the namespace.
+      # - secretName: chart-example-tls
+      #   hosts:
+      #     - chart-example.local
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #  cpu: 100m
+    #  memory: 128Mi
+    # requests:
+    #  cpu: 100m
+    #  memory: 128Mi
+ # livenessProbe:
+ #   initialDelaySeconds: 30
+ #   periodSeconds: 10
+ #   timeoutSeconds: 5
+ #   failureThreshold: 6
+ #   successThreshold: 1
+ # readinessProbe:
+ #   initialDelaySeconds: 5
+ #   periodSeconds: 10
+ #   timeoutSeconds: 5
+ #   failureThreshold: 6
+ #   successThreshold: 1
+  confFiles: |-
+    server {
+        listen       80;
+        server_name  localhost;
+        root   /var/www/html/public;
+        index  index.php index.html index.htm; 
+    
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+        location / {
+            try_files $uri $uri/ /index.php$is_args$args;
+        }
+    
+    
+        location ~ \.php$ {
+            root           /var/www/html/public;
+            fastcgi_pass   phpfpm:9000;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  /var/www/html/public/$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+    
+    }
+
+
+php:
+  replicaCount: 1
+  image:
+    repository: registry.cn-hangzhou.aliyuncs.com/netbankzgg/phpfpm
+    tag: customerCenter-k8s
+    pullPolicy: IfNotPresent
+
+  service:
+    name: netbank-cs-php
+    type: ClusterIP
+    externalPort: 9000
+    internalPort: 9000
+
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+
+  nodeSelector: {}
+
+ # livenessProbe:
+ #   initialDelaySeconds: 30
+ #   periodSeconds: 10
+ #   timeoutSeconds: 5
+ #   failureThreshold: 6
+ #   successThreshold: 1
+ # readinessProbe:
+ #   initialDelaySeconds: 5
+ #   periodSeconds: 10
+ #   timeoutSeconds: 5
+ #   failureThreshold: 6
+ #   successThreshold: 1
+
+
+mysql:
+  image:
+    repository: registry.cn-hangzhou.aliyuncs.com/netbankzgg/mysql
+    tag: customerCenter-k8s
+  mysqlUser: root
+  mysqlRootPassword: test
+  persistence:
+    enabled: false
+    # existingClaim:
+
+    storageClass: "-"
+    accessMode: ReadWriteOnce
+    size: 8Gi
+  service:
+    type: ClusterIP
+    internalPort: 3306
+    externalPort: 3306
+
+

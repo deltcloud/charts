@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "netbank-cs.fullname" . }}-mysql
+  labels:
+    app: {{ template "netbank-cs.name" . }}-cmdb
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ template "netbank-cs.name" . }}-cmdb
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.mysql.image.repository }}:{{ .Values.mysql.image.tag }}"
+          imagePullPolicy: {{ .Values.mysql.image.pullPolicy }}
+          env:
+          - name: MYSQL_USER
+            value: {{ .Values.mysql.mysqlUser }}
+          - name: MYSQL_PORT
+            value: "3306"
+          - name: MYSQL_ROOT_PASSWORD
+            value: {{ .Values.mysql.mysqlRootPassword }}
+          ports:
+            - containerPort: {{ .Values.mysql.service.internalPort }}

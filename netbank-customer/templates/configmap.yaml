@@ -17,11 +17,11 @@ data:
     copyrequestbody = true
     EnableDocs = true
 
-    dbhost={{ template "netbank-customer.mariadb.fullname" . }}
-    dbschema={{ .Values.mariadb.mariadbDatabase }}
-    dbuser={{ .Values.mariadb.mariadbUser }}
-    dbpassword={{ .Values.mariadb.mariadbPassword }}
-    dbport=3306
+    dbhost={{ template "netbank-customer.fullname" . }}-mysql
+    dbschema={{ .Values.mysql.mysqlDatabase }}
+    dbuser={{ .Values.mysql.mysqlUser }}
+    dbpassword={{ .Values.mysql.mysqlPassword }}
+    dbport={{ .Values.mysql.service.externalPort }}
     copyrequestbody=true
 
 
@@ -34,4 +34,12 @@ data:
     smsResetPwdTemplate= {{ .Values.sms.smsResetPwdTemplate }}
 
     captchaHost=http://{{ .Values.captchaHost }}/verify
+    tigaseHost=http://tigase:8080/rest/adhoc/sess-man@im.linkcloud.cn?api-key=test1234
+    tigaseAuthorization=Basic YWRtaW5AaW0ubGlua2Nsb3VkLmNuOmFkbWlu
+    tigaseDomain=im.linkcloud.cn
+    
+    7niuBucket=zhenhaip
+    7niuAK=NDj32L53COMvyU72IY3pdgZhc5GAjMDaqeHXugkp
+    7niuSK=5yOxgmQgT0HjMo1ZtqfjllTRrm1xsIW5Q2NdIe2E
+    7niuForeignDomain=http://7nj2q4.com1.z0.glb.clouddn.com
 

@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "netbank-customer.fullname" $ }}-notify
+  labels:
+    app: {{ template "netbank-customer.name" . }}-notify
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+
+data: 
+  config: |-
+    {
+       "debug": true,
+       "http": {
+           "enable": true,
+           "listen": "0.0.0.0:1987"
+       },
+       "mail" : {
+           "enable": true,
+           "addr" : "smtp.netbank.cn",
+           "port": 25,
+           "username": "weizhenhai@netbank.cn",
+           "password": "Ww06250331",
+           "from": "weizhenhai@netbank.cn"
+       },
+       "sms" : {
+           "enable": true,
+           "access_key_id":{{ .Values.sms.smsAccessKeyId | quote}},
+           "secret":{{ .Values.sms.smsSecret | quote}},
+           "signature":{{ .Values.sms.smsSignature | quote}},
+           "register_template":{{ .Values.sms.smsRegisterTemplate | quote }},
+           "reset_pwd_template":{{ .Values.sms.smsResetPwdTemplate | quote }}
+       },
+       "weixin" : {
+           "enable": true,
+           "url" : "https://api.weixin.qq.com/cgi-bin",
+           "agentid": "1",
+           "appid": "wx9a8407f4cb2f15e9",
+           "secret": "61df5de3dda3891fc826b11a10d8f222",
+           "partys": {
+               "op_nana": 2,
+               "op_mana":  3
+           },
+           "tags": {
+               "op_duty": 1
+           },
+           "template_to_be_deal":"HVzrhiKvr6n7hZDz723HzV_HteRqbaEHni6eJgjBsDw"
+       },
+       "redis" : {
+           "enable": true,
+           "addr" : "{{ $.Release.Name }}-redis:6379",
+           "password": ""
+       },
+       "mysql" : {
+           "enable": true,
+           "addr" : "{{ $.Release.Name }}-{{ $.Chart.Name }}-mysql:{{ .Values.mysql.service.externalPort }}",
+           "username": {{ .Values.mysql.mysqlUser  | quote}} ,
+           "password": {{ .Values.mysql.mysqlPassword  | quote}} ,
+           "schema": {{ .Values.mysql.mysqlDatabase  | quote}}
+       }
+    }

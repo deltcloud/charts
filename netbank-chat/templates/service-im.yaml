@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "netbank-chat.fullname" . }}-im
+  labels:
+    app: {{ template "netbank-chat.name" . }}-im
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.im.service.type }}
+  ports:
+    - port: {{ .Values.im.service.externalPort }}
+      targetPort: {{ .Values.im.service.internalPort }}
+      protocol: TCP
+      name: {{ .Values.im.service.name }}
+  selector:
+    app: {{ template "netbank-chat.name" . }}-im
+    release: {{ .Release.Name }}

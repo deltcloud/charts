@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "netbank-customer.fullname" . }}-notify
+  labels:
+    app: {{ template "netbank-customer.name" . }}-notify
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.notify.service.type }}
+  ports:
+    - port: {{ .Values.notify.service.externalPort }}
+      targetPort: {{ .Values.notify.service.internalPort }}
+      protocol: TCP
+      name: {{ .Values.notify.service.name }}
+  selector:
+    app: {{ template "netbank-customer.name" . }}-notify
+    release: {{ .Release.Name }}

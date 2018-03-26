@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "netbank-customer.fullname" . }}-notify
+  labels:
+    app: {{ template "netbank-customer.name" . }}-notify
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.notify.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "netbank-customer.name" . }}-notify
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-notify
+          image: "{{ .Values.notify.image.repository }}:{{ .Values.notify.image.tag }}"
+          imagePullPolicy: {{ .Values.notify.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.notify.service.internalPort }}
+          volumeMounts:
+          - name: config
+            mountPath: /smsmail/config
+          resources:
+{{ toYaml .Values.notify.resources | indent 12 }}
+    {{- if .Values.notify.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.notify.nodeSelector | indent 8 }}
+    {{- end }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ template "netbank-customer.fullname" . }}-notify
+          items:
+          - key: config
+            path: cfg.example.json
+

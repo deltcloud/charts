@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "netbank-chat.fullname" . }}-mysql
+  labels:
+    app: {{ template "netbank-chat.name" . }}-mysql
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.mysql.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "netbank-chat.name" . }}-mysql
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-mysql
+          image: "{{ .Values.mysql.image.repository }}:{{ .Values.mysql.image.tag }}"
+          imagePullPolicy: {{ .Values.mysql.image.pullPolicy }}
+          env:
+          - name: MARIADB_ROOT_PASSWORD
+            value: {{ .Values.mysql.rootPassword }}
+          ports:
+            - containerPort: {{ .Values.mysql.service.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.mysql.service.internalPort }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.mysql.service.internalPort }}
+          resources:
+{{ toYaml .Values.mysql.resources | indent 12 }}
+    {{- if .Values.mysql.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.mysql.nodeSelector | indent 8 }}
+    {{- end }}

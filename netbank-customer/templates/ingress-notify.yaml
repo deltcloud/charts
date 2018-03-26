@@ -1,0 +1,32 @@
+{{- if .Values.notify.ingress.enabled -}}
+{{- $serviceName := include "netbank-customer.fullname" . -}}
+{{- $servicePort := .Values.notify.service.externalPort -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "netbank-customer.fullname" . }}-notify
+  labels:
+    app: {{ template "netbank-customer.name" . }}-notify
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    {{- range $key, $value := .Values.notify.ingress.annotations }}
+      {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  rules:
+    {{- range $host := .Values.notify.ingress.hosts }}
+    - host: {{ $host }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ $serviceName }}-notify
+              servicePort: {{ $servicePort }}
+    {{- end -}}
+  {{- if .Values.notify.ingress.tls }}
+  tls:
+{{ toYaml .Values.notify.ingress.tls | indent 4 }}
+  {{- end -}}
+{{- end -}}

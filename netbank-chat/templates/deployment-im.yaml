@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "netbank-chat.fullname" . }}-im
+  labels:
+    app: {{ template "netbank-chat.name" . }}-im
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.im.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "netbank-chat.name" . }}-im
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-im
+          image: "{{ .Values.im.image.repository }}:{{ .Values.im.image.tag }}"
+          imagePullPolicy: {{ .Values.im.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.im.service.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.im.service.internalPort }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.im.service.internalPort }}
+          resources:
+{{ toYaml .Values.im.resources | indent 12 }}
+    {{- if .Values.im.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.im.nodeSelector | indent 8 }}
+    {{- end }}

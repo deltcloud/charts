@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "netbank-cs.fullname" . }}-php
+  labels:
+    app: {{ template "netbank-cs.name" . }}-php
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.php.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "netbank-cs.name" . }}-php
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-php
+          image: "{{ .Values.php.image.repository }}:{{ .Values.php.image.tag }}"
+          imagePullPolicy: {{ .Values.php.image.pullPolicy }}
+          command: ["/usr/local/sbin/php-fpm"]
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: {{ .Values.mysql.mysqlRootPassword }}
+          - name: MYSQL_ROOT_IP
+            value: {{ template "netbank-cs.fullname" . }}-mysql

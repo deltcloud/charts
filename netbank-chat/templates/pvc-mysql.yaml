@@ -1,0 +1,19 @@
+{{- if and .Values.mysql.persistence.enabled (not .Values.mysql.persistence.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "netbank-chat.fullname" . }}-mysql
+spec:
+  accessModes:
+    - {{ .Values.mysql.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.mysql.persistence.size | quote }}
+{{- if .Values.mysql.persistence.storageClass }}
+{{- if (eq "-" .Values.mysql.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.mysql.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

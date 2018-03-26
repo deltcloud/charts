@@ -9,8 +9,8 @@ image:
 service:
   name: netbank-customer
   type: ClusterIP
-  externalPort: 80
-  internalPort: 80
+  externalPort: 8089
+  internalPort: 8089
 ingress:
   enabled: false
   # Used to create an Ingress record.
@@ -38,11 +38,42 @@ resources: {}
   #  memory: 128Mi
 
 
-mariadb:
-  mariadbDatabase: nbusers
-  mariadbUser: netbank
-  mariadbPassword: netbank
+mysql:
+  replicaCount: 1
+  image:
+    repository: registry.cn-hangzhou.aliyuncs.com/linkcloud/usersvr_mysql
+    tag: 1.0.0
+    pullPolicy: IfNotPresent
+  service:
+    name: netbank-customer-mysql
+    type: ClusterIP
+    externalPort: 3306
+    internalPort: 3306
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #  cpu: 100m
+    #  memory: 128Mi
+    # requests:
+    #  cpu: 100m
+    #  memory: 128Mi
+  nodeSelector: {}
+  persistence:
+    enabled: true
+    # existingClaim:
 
+    storageClass: "-"
+    accessMode: ReadWriteOnce
+    size: 8Gi
+  mysqlDatabase: "users"
+  mysqlUser: "root"
+  mysqlPassword: "123456"
 
 sms:
   smsAccessKeyId: smsAccessKeyId
@@ -51,3 +82,52 @@ sms:
   smsResetPwdTemplate: smsResetPwdTemplate
 
 captchaHost: captcha-0-captcha
+
+
+notify:
+  replicaCount: 1
+  image:
+    repository: registry.cn-hangzhou.aliyuncs.com/linkcloud/notify
+    tag: 1.0.0
+    pullPolicy: IfNotPresent
+  service:
+    name: netbank-customer-notify
+    type: ClusterIP
+    externalPort: 80
+    internalPort: 1987
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #  cpu: 100m
+    #  memory: 128Mi
+    # requests:
+    #  cpu: 100m
+    #  memory: 128Mi
+  nodeSelector: {}
+  ingress:
+    enabled: false
+    # Used to create an Ingress record.
+    hosts:
+      - chart-example.local
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    tls: []
+      # Secrets must be manually created in the namespace.
+      # - secretName: chart-example-tls
+      #   hosts:
+      #     - chart-example.local
+
+
+redis:
+  image: registry.cn-hangzhou.aliyuncs.com/linkcloud/redis_bitnami:4.0.6-r1
+  usePassword: false
+  persistence:
+    enabled: false
+

@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "netbank-cs.fullname" . }}-pc
+  labels:
+    app: {{ template "netbank-cs.name" . }}-pc
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.pc.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "netbank-cs.name" . }}-pc
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-pc
+          image: "{{ .Values.pc.image.repository }}:{{ .Values.pc.image.tag }}"
+          imagePullPolicy: {{ .Values.pc.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.pc.service.internalPort }}

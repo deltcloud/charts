@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "netbank-cs.fullname" . }}-pc
+  labels:
+    app: {{ template "netbank-cs.name" . }}-pc
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.pc.service.type }}
+  ports:
+    - port: {{ .Values.pc.service.externalPort }}
+      targetPort: {{ .Values.pc.service.internalPort }}
+      protocol: TCP
+      name: {{ .Values.pc.service.name }}
+  selector:
+    app: {{ template "netbank-cs.name" . }}-pc
+    release: {{ .Release.Name }}

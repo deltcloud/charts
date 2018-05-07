@@ -1,12 +1,11 @@
 {{- if .Values.im.ingress.enabled -}}
 {{- $serviceName := include "netbank-chat.fullname" . -}}
-{{- $servicePort := .Values.im.service.externalPort -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "netbank-chat.fullname" . }}
+  name: {{ template "netbank-chat.fullname" . }}-im
   labels:
-    app: {{ template "netbank-chat.name" . }}
+    app: {{ template "netbank-chat.name" . }}-im
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -22,8 +21,8 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $servicePort }}
+              serviceName: {{ $serviceName }}-im
+              servicePort: 5280
     {{- end -}}
   {{- if .Values.im.ingress.tls }}
   tls:

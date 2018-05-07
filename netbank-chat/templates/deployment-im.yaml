@@ -19,19 +19,45 @@ spec:
         - name: {{ .Chart.Name }}-im
           image: "{{ .Values.im.image.repository }}:{{ .Values.im.image.tag }}"
           imagePullPolicy: {{ .Values.im.image.pullPolicy }}
+          env:
+          - name: USER_SERVICE_NAME
+            value: {{ .Values.im.env.user_service_name }}
+          - name: USER_SERVICE_TOKEN
+            value: {{ .Values.im.env.user_service_token }}
+          - name: CUSTOMER_SERVICE_TOKEN
+            value: {{ .Values.im.env.cusromer_service_token }}
+          - name: CUSTOMER_SERVICE_NAME
+            value: {{ .Values.im.env.custome_service_name }}
+          - name: TIGASE_DEFAULT_DATASOURCE
+            value: 'jdbc:mysql://{{ template "netbank-chat.fullname" . }}-mysql/tigase8?user=root&password=123456&useSSL=false&useLegacyDatetimeCode=false'
           ports:
-            - containerPort: {{ .Values.im.service.internalPort }}
+            - containerPort: 8080
+              name: http
+            - containerPort: 5280
+              name: xmpp
+          volumeMounts:
+          - name: data
+            mountPath: /tigase/upload
           livenessProbe:
             httpGet:
               path: /
-              port: {{ .Values.im.service.internalPort }}
+              port: 8080
           readinessProbe:
             httpGet:
               path: /
-              port: {{ .Values.im.service.internalPort }}
+              port: 8080
           resources:
 {{ toYaml .Values.im.resources | indent 12 }}
     {{- if .Values.im.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.im.nodeSelector | indent 8 }}
     {{- end }}
+      volumes:
+      - name: data
+      {{- if .Values.im.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.im.persistence.existingClaim }}{{ .Values.im.persistence.existingClaim }}{{- else }}{{ template "netbank-chat.fullname" . }}-im{{- end }}
+
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}

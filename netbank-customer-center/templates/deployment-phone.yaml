@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "netbank-cs.fullname" . }}-phone
+  labels:
+    app: {{ template "netbank-cs.name" . }}-phone
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.phone.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "netbank-cs.name" . }}-phone
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-phone
+          image: "{{ .Values.phone.image.repository }}:{{ .Values.phone.image.tag }}"
+          imagePullPolicy: {{ .Values.phone.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.phone.service.internalPort }}

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "deltcloud-p1.fullname" . }}
+  labels:
+    app: {{ template "deltcloud-p1.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.apiserver.service.type }}
+  ports:
+    - port: {{ .Values.apiserver.service.externalPort }}
+      targetPort: {{ .Values.apiserver.service.internalPort }}
+      protocol: TCP
+      name: {{ .Values.apiserver.service.name }}
+  selector:
+    app: {{ template "deltcloud-p1.name" . }}
+    release: {{ .Release.Name }}

@@ -7,11 +7,17 @@ im:
     repository: registry.cn-hangzhou.aliyuncs.com/linkcloud/im
     tag: 1.0.0
     pullPolicy: IfNotPresent
+  persistence:
+    enabled: true
+    # existingClaim:
+
+    storageClass: ceph-rbd
+    accessMode: ReadWriteOnce
+    size: 20Gi
+
   service:
     name: im
     type: ClusterIP
-    externalPort: 8080
-    internalPort: 8080
   ingress:
     enabled: false
     # Used to create an Ingress record.
@@ -36,6 +42,12 @@ im:
     # requests:
     #  cpu: 100m
     #  memory: 128Mi
+  env:
+    user_service_name: 'netbank-customer-0-netbank-customer:8089'
+    user_service_token: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjMwOGIzYTc3NGM2NzZjYWE1NzkyODM3ZTMyMjViOGY0OGUzZmM3ZTkifQ.eyJpc3MiOiJodHRwOi8vYXV0aC5uZXRiYW5rLmNuIiwic3ViIjoiMTEiLCJhdWQiOiJleHRlcm5hbC5jdXN0b21lci1zZXJ2aWNlLmxpbmtjbG91ZC5jbiIsImV4cCI6MTYwNzk5ODQ3NiwiaWF0IjoxNTIxNTk4NDc2LCJhdF9oYXNoIjoiNzBhbl81Yk5XeHAtczhhbzBfdEU3QSIsImN1c3RvbWVyX25vIjoiV1kxNjEwMzU0In0.aAlPqtpeTLA_HOTiRQwEIC9S2Mz_LjfgcAqAYyHWBJu9C28_S4gToK6kfXd-laqQ-Z5xSkLPKrWt4ROdyetdw92Hv2i9l12DvkRZPo3Ylj_flABDO4cRMiXpnJd44-1D9JKzZhhUKyDkOdFVGjITzvcySymVdr5aJ_uqx6srP0c6MZ3ziwnMPkDB91rS7puaBCWs9sZ63xRjdhFrr45O72gLIp4nRs7Q4Mp6Ol0_RonPykBXFyxz2XLX91NKbofqcxomSW53UVDTOaUci8KTMo3sdxZlBxgxOXJvqZLH6WkvsJwDZoWk2zxpEwX26bahw7KpIPoJL_4h_QG8qtKB0A'
+    cusromer_service_token: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjMwOGIzYTc3NGM2NzZjYWE1NzkyODM3ZTMyMjViOGY0OGUzZmM3ZTkifQ.eyJpc3MiOiJodHRwOi8vYXV0aC5uZXRiYW5rLmNuIiwic3ViIjoiMTEiLCJhdWQiOiJleHRlcm5hbC5jdXN0b21lci1zZXJ2aWNlLmxpbmtjbG91ZC5jbiIsImV4cCI6MTYwNzk5ODQ3NiwiaWF0IjoxNTIxNTk4NDc2LCJhdF9oYXNoIjoiNzBhbl81Yk5XeHAtczhhbzBfdEU3QSIsImN1c3RvbWVyX25vIjoiV1kxNjEwMzU0In0.aAlPqtpeTLA_HOTiRQwEIC9S2Mz_LjfgcAqAYyHWBJu9C28_S4gToK6kfXd-laqQ-Z5xSkLPKrWt4ROdyetdw92Hv2i9l12DvkRZPo3Ylj_flABDO4cRMiXpnJd44-1D9JKzZhhUKyDkOdFVGjITzvcySymVdr5aJ_uqx6srP0c6MZ3ziwnMPkDB91rS7puaBCWs9sZ63xRjdhFrr45O72gLIp4nRs7Q4Mp6Ol0_RonPykBXFyxz2XLX91NKbofqcxomSW53UVDTOaUci8KTMo3sdxZlBxgxOXJvqZLH6WkvsJwDZoWk2zxpEwX26bahw7KpIPoJL_4h_QG8qtKB0A' 
+    custome_service_name: 'netbank-cs-netbank-customer-center-nginx'
+
 mysql:
   replicaCount: 1
   image:
@@ -43,7 +55,7 @@ mysql:
     tag: 1.0.0
     pullPolicy: IfNotPresent
   
-  rootPassword: netbank
+  rootPassword: 123456
 
   persistence:
     enabled: true
@@ -58,6 +70,31 @@ mysql:
     type: ClusterIP
     externalPort: 3306
     internalPort: 3306
+  ingress:
+    enabled: false
+  resources: {}
+
+api:
+  replicaCount: 1
+  image:
+    repository: registry.cn-hangzhou.aliyuncs.com/zhenhai/im_api_server
+    tag: 0.0.1
+    pullPolicy: IfNotPresent
+  
+
+  persistence:
+    enabled: false
+    # existingClaim:
+
+    storageClass: ""
+    accessMode: ReadWriteOnce
+    size: 20Gi
+
+  service:
+    name: api
+    type: ClusterIP
+    externalPort: 9091
+    internalPort: 9091
   ingress:
     enabled: false
   resources: {}

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ template "netbank-cs.fullname" . }}-mysql
   labels:
-    app: {{ template "netbank-cs.name" . }}-cmdb
+    app: {{ template "netbank-cs.name" . }}-mysql
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "netbank-cs.name" . }}-cmdb
+        app: {{ template "netbank-cs.name" . }}-mysql
         release: {{ .Release.Name }}
     spec:
       containers:
@@ -26,5 +26,24 @@ spec:
             value: "3306"
           - name: MYSQL_ROOT_PASSWORD
             value: {{ .Values.mysql.mysqlRootPassword }}
+          args: ["--ignore-db-dir", "lost+found"]
           ports:
             - containerPort: {{ .Values.mysql.service.internalPort }}
+          volumeMounts:
+          - name: data
+            mountPath: /var/lib/mysql
+          resources:
+{{ toYaml .Values.mysql.resources | indent 12 }}
+    {{- if .Values.mysql.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.mysql.nodeSelector | indent 8 }}
+    {{- end }}
+      volumes:
+      - name: data
+      {{- if .Values.mysql.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.mysql.persistence.existingClaim }}{{ .Values.mysql.persistence.existingClaim }}{{- else }}{{ template "netbank-cs.fullname" . }}-mysql{{- end }}
+
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}

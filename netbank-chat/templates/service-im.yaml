@@ -10,10 +10,12 @@ metadata:
 spec:
   type: {{ .Values.im.service.type }}
   ports:
-    - port: {{ .Values.im.service.externalPort }}
-      targetPort: {{ .Values.im.service.internalPort }}
-      protocol: TCP
-      name: {{ .Values.im.service.name }}
+    - name: http
+      port: 8080
+      targetPort: 8080
+    - name: xmpp
+      port: 5280
+      targetPort: 5280
   selector:
     app: {{ template "netbank-chat.name" . }}-im
     release: {{ .Release.Name }}

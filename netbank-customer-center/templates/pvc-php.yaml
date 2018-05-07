@@ -1,0 +1,19 @@
+{{- if and .Values.php.persistence.enabled (not .Values.php.persistence.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "netbank-cs.fullname" . }}-php
+spec:
+  accessModes:
+    - {{ .Values.php.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.php.persistence.size | quote }}
+{{- if .Values.php.persistence.storageClass }}
+{{- if (eq "-" .Values.php.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.php.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

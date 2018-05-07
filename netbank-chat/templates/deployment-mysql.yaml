@@ -20,21 +20,26 @@ spec:
           image: "{{ .Values.mysql.image.repository }}:{{ .Values.mysql.image.tag }}"
           imagePullPolicy: {{ .Values.mysql.image.pullPolicy }}
           env:
-          - name: MARIADB_ROOT_PASSWORD
-            value: {{ .Values.mysql.rootPassword }}
+          - name: MYSQL_ROOT_PASSWORD
+            value: {{ .Values.mysql.rootPassword | quote }}
+          args: ["--ignore-db-dir", "lost+found"]
           ports:
             - containerPort: {{ .Values.mysql.service.internalPort }}
-          livenessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.mysql.service.internalPort }}
-          readinessProbe:
-            httpGet:
-              path: /
-              port: {{ .Values.mysql.service.internalPort }}
+          volumeMounts:
+          - name: data
+            mountPath: /var/lib/mysql
           resources:
 {{ toYaml .Values.mysql.resources | indent 12 }}
     {{- if .Values.mysql.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.mysql.nodeSelector | indent 8 }}
     {{- end }}
+      volumes:
+      - name: data
+      {{- if .Values.mysql.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.mysql.persistence.existingClaim }}{{ .Values.mysql.persistence.existingClaim }}{{- else }}{{ template "netbank-chat.fullname" . }}-mysql{{- end }}
+
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}

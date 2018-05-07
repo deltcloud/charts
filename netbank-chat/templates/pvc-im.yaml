@@ -1,0 +1,19 @@
+{{- if and .Values.im.persistence.enabled (not .Values.im.persistence.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "netbank-chat.fullname" . }}-im
+spec:
+  accessModes:
+    - {{ .Values.im.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.im.persistence.size | quote }}
+{{- if .Values.im.persistence.storageClass }}
+{{- if (eq "-" .Values.im.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.im.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

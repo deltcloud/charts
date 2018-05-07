@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "deltcloud-p1.fullname" . }}
+  labels:
+    app: {{ template "deltcloud-p1.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.apiserver.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "deltcloud-p1.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.apiserver.image.repository }}:{{ .Values.apiserver.image.tag }}"
+          imagePullPolicy: {{ .Values.apiserver.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.apiserver.service.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.apiserver.service.internalPort }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.apiserver.service.internalPort }}
+          volumeMounts:
+          - name: config
+            mountPath: /etc/resources
+          resources:
+{{ toYaml .Values.apiserver.resources | indent 12 }}
+    {{- if .Values.apiserver.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.apiserver.nodeSelector | indent 8 }}
+    {{- end }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ template "deltcloud-p1.fullname" . }}
+          items:
+          - key: config
+            path: application.properties
+

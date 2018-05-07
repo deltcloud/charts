@@ -25,3 +25,29 @@ spec:
             value: {{ .Values.mysql.mysqlRootPassword }}
           - name: MYSQL_ROOT_IP
             value: {{ template "netbank-cs.fullname" . }}-mysql
+          - name: COMPANY_NO_URL
+            value: "http://{{ .Values.php.usersver }}:8089/v1/customers?Size=10000"
+          - name: ALL_ZHENHAI_URL
+            value: {{ .Values.php.notify }}
+          - name: WEB_WX_ALL_URL
+            value: {{ .Values.php.phone }}
+          ports:
+            - containerPort: {{ .Values.php.service.internalPort }}
+          volumeMounts:
+          - name: data
+            mountPath: /var/www/html/storage/app
+          resources:
+{{ toYaml .Values.php.resources | indent 12 }}
+    {{- if .Values.php.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.php.nodeSelector | indent 8 }}
+    {{- end }}
+      volumes:
+      - name: data
+      {{- if .Values.php.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.php.persistence.existingClaim }}{{ .Values.php.persistence.existingClaim }}{{- else }}{{ template "netbank-cs.fullname" . }}-php{{- end }}
+
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}

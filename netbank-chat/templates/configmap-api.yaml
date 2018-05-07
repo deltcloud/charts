@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "netbank-chat.fullname" . }}-api
+  labels:
+    app: {{ template "netbank-chat.name" . }}-api
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+
+data: 
+  config: |-
+    appname = tigase_api_server
+    httpport = {{ .Values.api.service.internalPort }}
+    runmode = dev
+    autorender = false
+    copyrequestbody = true
+    EnableDocs = true
+    TigaseServer = {{ template "netbank-chat.fullname" . }}-im:8080
+    TigaseAuth = Basic YWRtaW5AaW0ubGlua2Nsb3VkLmNuOmFkbWlu

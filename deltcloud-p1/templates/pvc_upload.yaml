@@ -1,0 +1,24 @@
+{{- if and .Values.apiserver.upload.persistence.enabled (not .Values.apiserver.upload.persistence.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "upload.fullname" . }}
+  labels:
+    app: {{ template "upload.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  accessModes:
+    - {{ .Values.apiserver.upload.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.apiserver.upload.persistence.size | quote }}
+{{- if .Values.apiserver.upload.persistence.storageClass }}
+{{- if (eq "-" .Values.apiserver.upload.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.apiserver.upload.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

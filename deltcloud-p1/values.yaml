@@ -38,6 +38,11 @@ apiserver:
     #  cpu: 100m
     #  memory: 128Mi
   config: {}
+  upload:
+    persistence:
+      enabled: false
+      accessMode: ReadWriteOnce
+      size: 8Gi
 
 
 mariadb:

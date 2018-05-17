@@ -30,6 +30,8 @@ spec:
               path: /
               port: {{ .Values.apiserver.service.internalPort }}
           volumeMounts:
+          - name: data
+            mountPath: /root/upload-dir
           - name: config
             mountPath: /etc/resources
           resources:
@@ -45,4 +47,11 @@ spec:
           items:
           - key: config
             path: application.properties
+      - name: data
+      {{- if .Values.apiserver.upload.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.apiserver.upload.persistence.existingClaim | default (include "upload.fullname" .) }}
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}
 

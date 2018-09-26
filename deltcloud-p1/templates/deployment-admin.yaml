@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: { template "deltcloud-p1.fullname" . }}-admin
+  labels:
+    app: {{ template "deltcloud-p1.name" . }}-admin
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.admin.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "deltcloud-p1.name" . }}-admin
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.admin.image.repository }}:{{ .Values.admin.image.tag }}"
+        imagePullPolicy: {{ .Values.admin.image.pullPolicy }}
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: {{ .Values.admin.service.internalPort }}
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        ports:
+        - containerPort: {{ .Values.admin.service.internalPort }}
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: {{ .Values.admin.service.internalPort }}
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}

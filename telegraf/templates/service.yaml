@@ -42,7 +42,7 @@ spec:
     name: "webhooks"
     {{- end }}
     {{- if eq $key "socket_listener" }}
-  - port: {{ trimPrefix ":" $value.service_address | int64 }}
+  - port: {{ trimPrefix "tcp://:" $value.service_address | int64 }}
     targetPort: {{ trimPrefix ":" $value.service_address | int64 }}
     name: "socket_listener"
     {{- end }}
